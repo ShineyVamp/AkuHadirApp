@@ -1,0 +1,34 @@
+import 'package:json_annotation/json_annotation.dart';
+
+part 'attendance_stats_model.g.dart';
+
+@JsonSerializable()
+class AttendanceStatsModel {
+  @JsonKey(name: 'total_absen')
+  final int totalAbsen;
+  @JsonKey(name: 'total_masuk')
+  final int totalMasuk;
+  @JsonKey(name: 'total_izin')
+  final int totalIzin;
+  @JsonKey(name: 'sudah_absen_hari_ini')
+  final bool sudahAbsenHariIni;
+
+  AttendanceStatsModel({
+    this.totalAbsen = 0,
+    this.totalMasuk = 0,
+    this.totalIzin = 0,
+    this.sudahAbsenHariIni = false,
+  });
+
+  int get totalAlfa => (totalAbsen - totalMasuk - totalIzin) > 0 ? (totalAbsen - totalMasuk - totalIzin) : 0;
+
+  double get attendancePercentage {
+    if (totalAbsen == 0) return 0.0;
+    return (totalMasuk / totalAbsen) * 100;
+  }
+
+  factory AttendanceStatsModel.fromJson(Map<String, dynamic> json) =>
+      _$AttendanceStatsModelFromJson(json);
+
+  Map<String, dynamic> toJson() => _$AttendanceStatsModelToJson(this);
+}
