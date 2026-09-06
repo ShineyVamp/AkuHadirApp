@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:AbsenDulu/core/constants/app_colors.dart';
-import 'package:AbsenDulu/core/theme/neumorphic_decorations.dart';
-import 'package:AbsenDulu/data/models/batch_model.dart';
-import 'package:AbsenDulu/data/models/training_model.dart';
-import 'package:AbsenDulu/data/repositories/master_repository.dart';
-import 'package:AbsenDulu/presentation/screens/main/main_screen.dart';
-import 'package:AbsenDulu/presentation/providers/auth_provider.dart';
-import 'package:AbsenDulu/presentation/widgets/custom_snackbar.dart';
-import 'package:AbsenDulu/presentation/widgets/neumorphic_button.dart';
-import 'package:AbsenDulu/presentation/widgets/neumorphic_text_field.dart';
+import 'package:absendulu/core/constants/app_colors.dart';
+import 'package:absendulu/core/theme/neumorphic_decorations.dart';
+import 'package:absendulu/data/models/batch_model.dart';
+import 'package:absendulu/data/models/training_model.dart';
+import 'package:absendulu/data/repositories/master_repository.dart';
+import 'package:absendulu/presentation/screens/main/main_screen.dart';
+import 'package:absendulu/presentation/providers/auth_provider.dart';
+import 'package:absendulu/presentation/widgets/custom_snackbar.dart';
+import 'package:absendulu/presentation/widgets/neumorphic_button.dart';
+import 'package:absendulu/presentation/widgets/neumorphic_text_field.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});

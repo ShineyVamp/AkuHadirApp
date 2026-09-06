@@ -1,7 +1,7 @@
-import 'package:AbsenDulu/core/constants/api_endpoints.dart';
-import 'package:AbsenDulu/core/network/api_client.dart';
-import 'package:AbsenDulu/data/models/batch_model.dart';
-import 'package:AbsenDulu/data/models/training_model.dart';
+import 'package:absendulu/core/constants/api_endpoints.dart';
+import 'package:absendulu/core/network/api_client.dart';
+import 'package:absendulu/data/models/batch_model.dart';
+import 'package:absendulu/data/models/training_model.dart';
 
 class MasterRepository {
   final ApiClient _apiClient = ApiClient();

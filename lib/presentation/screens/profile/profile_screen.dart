@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:AbsenDulu/core/constants/app_colors.dart';
-import 'package:AbsenDulu/core/theme/neumorphic_decorations.dart';
-import 'package:AbsenDulu/presentation/screens/auth/login_screen.dart';
-import 'package:AbsenDulu/presentation/providers/auth_provider.dart';
-import 'package:AbsenDulu/presentation/providers/theme_provider.dart';
-import 'package:AbsenDulu/presentation/widgets/neumorphic_button.dart';
-import 'package:AbsenDulu/presentation/widgets/neumorphic_card.dart';
-import 'package:AbsenDulu/presentation/screens/profile/edit_profile_dialog.dart';
+import 'package:absendulu/core/constants/app_colors.dart';
+import 'package:absendulu/core/theme/neumorphic_decorations.dart';
+import 'package:absendulu/presentation/screens/auth/login_screen.dart';
+import 'package:absendulu/presentation/providers/auth_provider.dart';
+import 'package:absendulu/presentation/providers/theme_provider.dart';
+import 'package:absendulu/presentation/widgets/neumorphic_button.dart';
+import 'package:absendulu/presentation/widgets/neumorphic_card.dart';
+import 'package:absendulu/presentation/screens/profile/edit_profile_dialog.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -326,7 +326,7 @@ class ProfileScreen extends StatelessWidget {
                             ],
                           ),
                           Text(
-                            'AbsenDulu v1.0.0 (PPKD)',
+                            'absendulu v1.0.0 (PPKD)',
                             style: TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.w600,

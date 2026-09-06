@@ -3,13 +3,13 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:provider/provider.dart';
-import 'package:AbsenDulu/core/constants/app_colors.dart';
-import 'package:AbsenDulu/core/services/location_service.dart';
-import 'package:AbsenDulu/presentation/providers/attendance_provider.dart';
-import 'package:AbsenDulu/presentation/providers/auth_provider.dart';
-import 'package:AbsenDulu/presentation/widgets/custom_snackbar.dart';
-import 'package:AbsenDulu/presentation/widgets/neumorphic_button.dart';
-import 'package:AbsenDulu/presentation/widgets/neumorphic_card.dart';
+import 'package:absendulu/core/constants/app_colors.dart';
+import 'package:absendulu/core/services/location_service.dart';
+import 'package:absendulu/presentation/providers/attendance_provider.dart';
+import 'package:absendulu/presentation/providers/auth_provider.dart';
+import 'package:absendulu/presentation/widgets/custom_snackbar.dart';
+import 'package:absendulu/presentation/widgets/neumorphic_button.dart';
+import 'package:absendulu/presentation/widgets/neumorphic_card.dart';
 
 class GpsVerificationScreen extends StatefulWidget {
   final bool isCheckIn;
@@ -259,7 +259,7 @@ class _GpsVerificationScreenState extends State<GpsVerificationScreen> {
                                 TileLayer(
                                   urlTemplate:
                                       'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-                                  userAgentPackageName: 'com.ppkd.AbsenDulu',
+                                  userAgentPackageName: 'com.ppkd.absendulu',
                                 ),
                                 CircleLayer(
                                   circles: [

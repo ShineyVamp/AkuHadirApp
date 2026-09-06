@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:AbsenDulu/core/constants/app_colors.dart';
-import 'package:AbsenDulu/core/theme/neumorphic_decorations.dart';
+import 'package:absendulu/core/constants/app_colors.dart';
+import 'package:absendulu/core/theme/neumorphic_decorations.dart';
 
 class NeumorphicButton extends StatefulWidget {
   final Widget child;

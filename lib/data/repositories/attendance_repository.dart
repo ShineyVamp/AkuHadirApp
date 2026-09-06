@@ -1,7 +1,7 @@
-import 'package:AbsenDulu/core/constants/api_endpoints.dart';
-import 'package:AbsenDulu/core/network/api_client.dart';
-import 'package:AbsenDulu/data/models/attendance_model.dart';
-import 'package:AbsenDulu/data/models/attendance_stats_model.dart';
+import 'package:absendulu/core/constants/api_endpoints.dart';
+import 'package:absendulu/core/network/api_client.dart';
+import 'package:absendulu/data/models/attendance_model.dart';
+import 'package:absendulu/data/models/attendance_stats_model.dart';
 
 class AttendanceRepository {
   final ApiClient _apiClient = ApiClient();

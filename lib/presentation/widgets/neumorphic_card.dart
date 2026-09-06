@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:AbsenDulu/core/theme/neumorphic_decorations.dart';
+import 'package:absendulu/core/theme/neumorphic_decorations.dart';
 
 class NeumorphicCard extends StatelessWidget {
   final Widget child;

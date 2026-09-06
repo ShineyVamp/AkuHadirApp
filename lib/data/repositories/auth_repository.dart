@@ -1,8 +1,8 @@
 import 'dart:convert';
-import 'package:AbsenDulu/core/constants/api_endpoints.dart';
-import 'package:AbsenDulu/core/network/api_client.dart';
-import 'package:AbsenDulu/core/services/storage_service.dart';
-import 'package:AbsenDulu/data/models/user_model.dart';
+import 'package:absendulu/core/constants/api_endpoints.dart';
+import 'package:absendulu/core/network/api_client.dart';
+import 'package:absendulu/core/services/storage_service.dart';
+import 'package:absendulu/data/models/user_model.dart';
 
 class AuthRepository {
   final ApiClient _apiClient = ApiClient();

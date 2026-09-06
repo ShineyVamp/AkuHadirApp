@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:AbsenDulu/core/services/storage_service.dart';
-import 'package:AbsenDulu/data/models/user_model.dart';
-import 'package:AbsenDulu/data/repositories/auth_repository.dart';
+import 'package:absendulu/core/services/storage_service.dart';
+import 'package:absendulu/data/models/user_model.dart';
+import 'package:absendulu/data/repositories/auth_repository.dart';
 
 class AuthProvider extends ChangeNotifier {
   final AuthRepository _repository = AuthRepository();

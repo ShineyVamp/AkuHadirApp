@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:AbsenDulu/core/services/storage_service.dart';
-import 'package:AbsenDulu/core/network/api_exception.dart';
+import 'package:absendulu/core/services/storage_service.dart';
+import 'package:absendulu/core/network/api_exception.dart';
 
 class ApiClient {
   final http.Client _client = http.Client();

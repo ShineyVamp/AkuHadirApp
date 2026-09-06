@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:AbsenDulu/presentation/screens/dashboard/dashboard_screen.dart';
-import 'package:AbsenDulu/presentation/screens/history/history_screen.dart';
-import 'package:AbsenDulu/presentation/screens/profile/profile_screen.dart';
-import 'package:AbsenDulu/presentation/providers/auth_provider.dart';
-import 'package:AbsenDulu/presentation/providers/history_provider.dart';
+import 'package:absendulu/presentation/screens/dashboard/dashboard_screen.dart';
+import 'package:absendulu/presentation/screens/history/history_screen.dart';
+import 'package:absendulu/presentation/screens/profile/profile_screen.dart';
+import 'package:absendulu/presentation/providers/auth_provider.dart';
+import 'package:absendulu/presentation/providers/history_provider.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});

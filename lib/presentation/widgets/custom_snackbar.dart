@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:AbsenDulu/core/constants/app_colors.dart';
+import 'package:absendulu/core/constants/app_colors.dart';
 
 class CustomSnackBar {
   static void showSuccess(BuildContext context, String message) {

@@ -1,5 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:AbsenDulu/data/models/training_model.dart';
+import 'package:absendulu/data/models/training_model.dart';
 part 'batch_model.g.dart';
 
 @JsonSerializable()

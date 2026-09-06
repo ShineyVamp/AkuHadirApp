@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
-import 'package:AbsenDulu/core/constants/app_colors.dart';
-import 'package:AbsenDulu/core/utils/image_helper.dart';
-import 'package:AbsenDulu/presentation/providers/auth_provider.dart';
-import 'package:AbsenDulu/presentation/widgets/custom_snackbar.dart';
-import 'package:AbsenDulu/presentation/widgets/neumorphic_button.dart';
-import 'package:AbsenDulu/presentation/widgets/neumorphic_text_field.dart';
+import 'package:absendulu/core/constants/app_colors.dart';
+import 'package:absendulu/core/utils/image_helper.dart';
+import 'package:absendulu/presentation/providers/auth_provider.dart';
+import 'package:absendulu/presentation/widgets/custom_snackbar.dart';
+import 'package:absendulu/presentation/widgets/neumorphic_button.dart';
+import 'package:absendulu/presentation/widgets/neumorphic_text_field.dart';
 
 class EditProfileDialog extends StatefulWidget {
   const EditProfileDialog({super.key});

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:AbsenDulu/core/constants/app_colors.dart';
-import 'package:AbsenDulu/core/services/storage_service.dart';
-import 'package:AbsenDulu/core/theme/neumorphic_decorations.dart';
-import 'package:AbsenDulu/presentation/screens/auth/login_screen.dart';
-import 'package:AbsenDulu/presentation/screens/main/main_screen.dart';
+import 'package:absendulu/core/constants/app_colors.dart';
+import 'package:absendulu/core/services/storage_service.dart';
+import 'package:absendulu/core/theme/neumorphic_decorations.dart';
+import 'package:absendulu/presentation/screens/auth/login_screen.dart';
+import 'package:absendulu/presentation/screens/main/main_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -58,7 +58,7 @@ class _SplashScreenState extends State<SplashScreen> {
             ),
             const SizedBox(height: 24),
             Text(
-              'AbsenDulu',
+              'absendulu',
               style: TextStyle(
                 fontSize: 26,
                 fontWeight: FontWeight.w700,

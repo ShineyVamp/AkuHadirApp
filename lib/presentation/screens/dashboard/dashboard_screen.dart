@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:AbsenDulu/core/constants/app_colors.dart';
-import 'package:AbsenDulu/core/theme/neumorphic_decorations.dart';
-import 'package:AbsenDulu/core/utils/date_formatter.dart';
-import 'package:AbsenDulu/presentation/screens/attendance/gps_verification_screen.dart';
-import 'package:AbsenDulu/presentation/screens/attendance/leave_request_dialog.dart';
-import 'package:AbsenDulu/presentation/providers/attendance_provider.dart';
-import 'package:AbsenDulu/presentation/providers/auth_provider.dart';
-import 'package:AbsenDulu/presentation/providers/theme_provider.dart';
-import 'package:AbsenDulu/presentation/widgets/neumorphic_card.dart';
+import 'package:absendulu/core/constants/app_colors.dart';
+import 'package:absendulu/core/theme/neumorphic_decorations.dart';
+import 'package:absendulu/core/utils/date_formatter.dart';
+import 'package:absendulu/presentation/screens/attendance/gps_verification_screen.dart';
+import 'package:absendulu/presentation/screens/attendance/leave_request_dialog.dart';
+import 'package:absendulu/presentation/providers/attendance_provider.dart';
+import 'package:absendulu/presentation/providers/auth_provider.dart';
+import 'package:absendulu/presentation/providers/theme_provider.dart';
+import 'package:absendulu/presentation/widgets/neumorphic_card.dart';
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});
