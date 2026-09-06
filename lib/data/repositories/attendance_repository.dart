@@ -1,4 +1,8 @@
-import 'package:akuhadir/core/constants/api_endpoints.dart';import 'package:akuhadir/core/network/api_client.dart';import 'package:akuhadir/data/models/attendance_model.dart';import 'package:akuhadir/data/models/attendance_stats_model.dart';
+import 'package:AbsenDulu/core/constants/api_endpoints.dart';
+import 'package:AbsenDulu/core/network/api_client.dart';
+import 'package:AbsenDulu/data/models/attendance_model.dart';
+import 'package:AbsenDulu/data/models/attendance_stats_model.dart';
+
 class AttendanceRepository {
   final ApiClient _apiClient = ApiClient();
 
@@ -22,7 +26,9 @@ class AttendanceRepository {
     );
 
     if (response is Map<String, dynamic>) {
-      final rawData = response.containsKey('data') ? response['data'] : response;
+      final rawData = response.containsKey('data')
+          ? response['data']
+          : response;
       if (rawData is Map<String, dynamic>) {
         final model = AttendanceModel.fromJson(rawData);
         if ((model.checkIn == null || model.checkIn!.isEmpty) &&
@@ -65,7 +71,9 @@ class AttendanceRepository {
     );
 
     if (response is Map<String, dynamic>) {
-      final rawData = response.containsKey('data') ? response['data'] : response;
+      final rawData = response.containsKey('data')
+          ? response['data']
+          : response;
       if (rawData is Map<String, dynamic>) {
         final model = AttendanceModel.fromJson(rawData);
         if ((model.checkOut == null || model.checkOut!.isEmpty) &&
@@ -100,14 +108,13 @@ class AttendanceRepository {
   }) async {
     final response = await _apiClient.post(
       ApiEndpoints.izin,
-      body: {
-        'date': date,
-        'alasan_izin': reason,
-      },
+      body: {'date': date, 'alasan_izin': reason},
     );
 
     if (response is Map<String, dynamic>) {
-      final rawData = response.containsKey('data') ? response['data'] : response;
+      final rawData = response.containsKey('data')
+          ? response['data']
+          : response;
       if (rawData is Map<String, dynamic>) {
         final model = AttendanceModel.fromJson(rawData);
         return AttendanceModel(
@@ -124,9 +131,13 @@ class AttendanceRepository {
 
   Future<AttendanceModel?> getTodayAttendance(String date) async {
     try {
-      final response = await _apiClient.get('${ApiEndpoints.today}?attendance_date=$date');
+      final response = await _apiClient.get(
+        '${ApiEndpoints.today}?attendance_date=$date',
+      );
       if (response is Map<String, dynamic>) {
-        final rawData = response.containsKey('data') ? response['data'] : response;
+        final rawData = response.containsKey('data')
+            ? response['data']
+            : response;
         if (rawData is Map<String, dynamic>) {
           return AttendanceModel.fromJson(rawData);
         } else if (rawData is List && rawData.isNotEmpty) {
@@ -147,9 +158,14 @@ class AttendanceRepository {
     }
   }
 
-  Future<AttendanceStatsModel> getAttendanceStats(String startDate, String endDate) async {
+  Future<AttendanceStatsModel> getAttendanceStats(
+    String startDate,
+    String endDate,
+  ) async {
     try {
-      final response = await _apiClient.get('${ApiEndpoints.stats}?start=$startDate&end=$endDate');
+      final response = await _apiClient.get(
+        '${ApiEndpoints.stats}?start=$startDate&end=$endDate',
+      );
       if (response is Map<String, dynamic> && response.containsKey('data')) {
         final data = response['data'];
         if (data is Map<String, dynamic>) {
@@ -162,7 +178,10 @@ class AttendanceRepository {
     }
   }
 
-  Future<List<AttendanceModel>> getHistory({String? startDate, String? endDate}) async {
+  Future<List<AttendanceModel>> getHistory({
+    String? startDate,
+    String? endDate,
+  }) async {
     String url = ApiEndpoints.history;
     if (startDate != null && endDate != null) {
       url += '?start=$startDate&end=$endDate';
@@ -172,7 +191,9 @@ class AttendanceRepository {
     if (response is Map<String, dynamic> && response.containsKey('data')) {
       final list = response['data'];
       if (list is List) {
-        return list.map((e) => AttendanceModel.fromJson(e as Map<String, dynamic>)).toList();
+        return list
+            .map((e) => AttendanceModel.fromJson(e as Map<String, dynamic>))
+            .toList();
       }
     }
     return [];

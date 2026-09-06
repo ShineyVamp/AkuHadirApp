@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:akuhadir/core/constants/app_colors.dart';
+import 'package:AbsenDulu/core/constants/app_colors.dart';
+
 class NeumorphicStatusChip extends StatelessWidget {
   final String status;
 
@@ -42,10 +43,7 @@ class NeumorphicStatusChip extends StatelessWidget {
           Container(
             width: 6,
             height: 6,
-            decoration: BoxDecoration(
-              color: textColor,
-              shape: BoxShape.circle,
-            ),
+            decoration: BoxDecoration(color: textColor, shape: BoxShape.circle),
           ),
           const SizedBox(width: 6),
           Text(

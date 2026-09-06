@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:akuhadir/core/services/storage_service.dart';
-import 'package:akuhadir/core/utils/date_formatter.dart';
-import 'package:akuhadir/data/models/attendance_model.dart';
-import 'package:akuhadir/data/repositories/attendance_repository.dart';
+import 'package:AbsenDulu/core/services/storage_service.dart';
+import 'package:AbsenDulu/core/utils/date_formatter.dart';
+import 'package:AbsenDulu/data/models/attendance_model.dart';
+import 'package:AbsenDulu/data/repositories/attendance_repository.dart';
 
 class HistoryProvider extends ChangeNotifier {
   final AttendanceRepository _repository = AttendanceRepository();
@@ -32,7 +32,9 @@ class HistoryProvider extends ChangeNotifier {
     if (cached != null && cached.isNotEmpty) {
       try {
         final list = jsonDecode(cached) as List;
-        _historyList = list.map((e) => AttendanceModel.fromJson(e as Map<String, dynamic>)).toList();
+        _historyList = list
+            .map((e) => AttendanceModel.fromJson(e as Map<String, dynamic>))
+            .toList();
       } catch (_) {}
     }
   }
@@ -44,7 +46,9 @@ class HistoryProvider extends ChangeNotifier {
       if (cached != null && cached.isNotEmpty) {
         try {
           final list = jsonDecode(cached) as List;
-          _historyList = list.map((e) => AttendanceModel.fromJson(e as Map<String, dynamic>)).toList();
+          _historyList = list
+              .map((e) => AttendanceModel.fromJson(e as Map<String, dynamic>))
+              .toList();
           notifyListeners();
         } catch (_) {}
       }
@@ -89,7 +93,9 @@ class HistoryProvider extends ChangeNotifier {
     if (cached != null && cached.isNotEmpty) {
       try {
         final list = jsonDecode(cached) as List;
-        _historyList = list.map((e) => AttendanceModel.fromJson(e as Map<String, dynamic>)).toList();
+        _historyList = list
+            .map((e) => AttendanceModel.fromJson(e as Map<String, dynamic>))
+            .toList();
         notifyListeners();
       } catch (_) {
         _historyList = [];

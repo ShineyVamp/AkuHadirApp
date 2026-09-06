@@ -1,10 +1,15 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:akuhadir/core/services/storage_service.dart';import 'package:akuhadir/core/network/api_exception.dart';
+import 'package:AbsenDulu/core/services/storage_service.dart';
+import 'package:AbsenDulu/core/network/api_exception.dart';
+
 class ApiClient {
   final http.Client _client = http.Client();
 
-  Map<String, String> _getHeaders({bool withAuth = true, Map<String, String>? extraHeaders}) {
+  Map<String, String> _getHeaders({
+    bool withAuth = true,
+    Map<String, String>? extraHeaders,
+  }) {
     final headers = <String, String>{
       'Accept': 'application/json',
       'Content-Type': 'application/json',
@@ -36,7 +41,8 @@ class ApiClient {
       return body;
     }
 
-    String errorMessage = 'Terjadi kesalahan pada server (${response.statusCode})';
+    String errorMessage =
+        'Terjadi kesalahan pada server (${response.statusCode})';
     dynamic errors;
 
     if (body is Map<String, dynamic>) {
@@ -64,7 +70,11 @@ class ApiClient {
     );
   }
 
-  Future<dynamic> get(String url, {bool withAuth = true, Map<String, String>? headers}) async {
+  Future<dynamic> get(
+    String url, {
+    bool withAuth = true,
+    Map<String, String>? headers,
+  }) async {
     try {
       final response = await _client.get(
         Uri.parse(url),
@@ -118,7 +128,11 @@ class ApiClient {
     }
   }
 
-  Future<dynamic> delete(String url, {bool withAuth = true, Map<String, String>? headers}) async {
+  Future<dynamic> delete(
+    String url, {
+    bool withAuth = true,
+    Map<String, String>? headers,
+  }) async {
     try {
       final response = await _client.delete(
         Uri.parse(url),

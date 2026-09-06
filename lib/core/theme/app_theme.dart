@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:akuhadir/core/constants/app_colors.dart';
+import 'package:AbsenDulu/core/constants/app_colors.dart';
+
 class AppTheme {
   static ThemeData get lightTheme {
     return ThemeData(

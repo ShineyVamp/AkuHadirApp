@@ -1,5 +1,9 @@
 import 'dart:convert';
-import 'package:akuhadir/core/constants/api_endpoints.dart';import 'package:akuhadir/core/network/api_client.dart';import 'package:akuhadir/core/services/storage_service.dart';import 'package:akuhadir/data/models/user_model.dart';
+import 'package:AbsenDulu/core/constants/api_endpoints.dart';
+import 'package:AbsenDulu/core/network/api_client.dart';
+import 'package:AbsenDulu/core/services/storage_service.dart';
+import 'package:AbsenDulu/data/models/user_model.dart';
+
 class AuthRepository {
   final ApiClient _apiClient = ApiClient();
 
@@ -7,10 +11,7 @@ class AuthRepository {
     final response = await _apiClient.post(
       ApiEndpoints.login,
       withAuth: false,
-      body: {
-        'email': email,
-        'password': password,
-      },
+      body: {'email': email, 'password': password},
     );
 
     if (response is Map<String, dynamic> && response.containsKey('data')) {
@@ -132,11 +133,7 @@ class AuthRepository {
     await _apiClient.post(
       ApiEndpoints.resetPassword,
       withAuth: false,
-      body: {
-        'email': email,
-        'otp': otp,
-        'password': newPassword,
-      },
+      body: {'email': email, 'otp': otp, 'password': newPassword},
     );
   }
 

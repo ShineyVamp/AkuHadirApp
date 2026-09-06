@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:akuhadir/core/constants/app_colors.dart';
-import 'package:akuhadir/core/theme/neumorphic_decorations.dart';
+import 'package:AbsenDulu/core/constants/app_colors.dart';
+import 'package:AbsenDulu/core/theme/neumorphic_decorations.dart';
 
 class NeumorphicTextField extends StatelessWidget {
   final TextEditingController? controller;
@@ -50,7 +50,9 @@ class NeumorphicTextField extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 13,
                   fontWeight: FontWeight.w600,
-                  color: isDark ? AppColors.textMediumDark : AppColors.textMedium,
+                  color: isDark
+                      ? AppColors.textMediumDark
+                      : AppColors.textMedium,
                 ),
               ),
               const SizedBox(height: 8),

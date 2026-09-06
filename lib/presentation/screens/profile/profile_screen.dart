@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:akuhadir/core/constants/app_colors.dart';
-import 'package:akuhadir/core/theme/neumorphic_decorations.dart';
-import 'package:akuhadir/presentation/screens/auth/login_screen.dart';
-import 'package:akuhadir/presentation/providers/auth_provider.dart';
-import 'package:akuhadir/presentation/providers/theme_provider.dart';
-import 'package:akuhadir/presentation/widgets/neumorphic_button.dart';
-import 'package:akuhadir/presentation/widgets/neumorphic_card.dart';
-import 'package:akuhadir/presentation/screens/profile/edit_profile_dialog.dart';
+import 'package:AbsenDulu/core/constants/app_colors.dart';
+import 'package:AbsenDulu/core/theme/neumorphic_decorations.dart';
+import 'package:AbsenDulu/presentation/screens/auth/login_screen.dart';
+import 'package:AbsenDulu/presentation/providers/auth_provider.dart';
+import 'package:AbsenDulu/presentation/providers/theme_provider.dart';
+import 'package:AbsenDulu/presentation/widgets/neumorphic_button.dart';
+import 'package:AbsenDulu/presentation/widgets/neumorphic_card.dart';
+import 'package:AbsenDulu/presentation/screens/profile/edit_profile_dialog.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -42,15 +42,18 @@ class ProfileScreen extends StatelessWidget {
                       ),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(48),
-                        child: user?.profilePhoto != null && user!.profilePhoto!.isNotEmpty
+                        child:
+                            user?.profilePhoto != null &&
+                                user!.profilePhoto!.isNotEmpty
                             ? Image.network(
                                 user.profilePhoto!,
                                 fit: BoxFit.cover,
-                                errorBuilder: (context, error, stackTrace) => const Icon(
-                                  Icons.person_rounded,
-                                  size: 54,
-                                  color: AppColors.primary,
-                                ),
+                                errorBuilder: (context, error, stackTrace) =>
+                                    const Icon(
+                                      Icons.person_rounded,
+                                      size: 54,
+                                      color: AppColors.primary,
+                                    ),
                               )
                             : const Icon(
                                 Icons.person_rounded,
@@ -75,7 +78,11 @@ class ProfileScreen extends StatelessWidget {
                             color: AppColors.primary,
                             shape: BoxShape.circle,
                           ),
-                          child: const Icon(Icons.edit_rounded, color: Colors.white, size: 14),
+                          child: const Icon(
+                            Icons.edit_rounded,
+                            color: Colors.white,
+                            size: 14,
+                          ),
                         ),
                       ),
                     ),
@@ -98,7 +105,9 @@ class ProfileScreen extends StatelessWidget {
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 13,
-                  color: isDark ? AppColors.textMediumDark : AppColors.textMedium,
+                  color: isDark
+                      ? AppColors.textMediumDark
+                      : AppColors.textMedium,
                 ),
               ),
               const SizedBox(height: 24),
@@ -121,13 +130,19 @@ class ProfileScreen extends StatelessWidget {
                       children: [
                         Row(
                           children: [
-                            const Icon(Icons.badge_outlined, size: 18, color: AppColors.primary),
+                            const Icon(
+                              Icons.badge_outlined,
+                              size: 18,
+                              color: AppColors.primary,
+                            ),
                             const SizedBox(width: 10),
                             Text(
                               'Nama Lengkap',
                               style: TextStyle(
                                 fontSize: 13,
-                                color: isDark ? AppColors.textMediumDark : AppColors.textMedium,
+                                color: isDark
+                                    ? AppColors.textMediumDark
+                                    : AppColors.textMedium,
                               ),
                             ),
                           ],
@@ -139,7 +154,9 @@ class ProfileScreen extends StatelessWidget {
                               style: TextStyle(
                                 fontSize: 13,
                                 fontWeight: FontWeight.w600,
-                                color: isDark ? AppColors.textHighDark : AppColors.textHigh,
+                                color: isDark
+                                    ? AppColors.textHighDark
+                                    : AppColors.textHigh,
                               ),
                             ),
                             const SizedBox(width: 4),
@@ -150,7 +167,11 @@ class ProfileScreen extends StatelessWidget {
                                   builder: (_) => const EditProfileDialog(),
                                 );
                               },
-                              child: const Icon(Icons.edit_note_rounded, size: 18, color: AppColors.primary),
+                              child: const Icon(
+                                Icons.edit_note_rounded,
+                                size: 18,
+                                color: AppColors.primary,
+                              ),
                             ),
                           ],
                         ),
@@ -162,13 +183,19 @@ class ProfileScreen extends StatelessWidget {
                       children: [
                         Row(
                           children: [
-                            const Icon(Icons.email_outlined, size: 18, color: AppColors.primary),
+                            const Icon(
+                              Icons.email_outlined,
+                              size: 18,
+                              color: AppColors.primary,
+                            ),
                             const SizedBox(width: 10),
                             Text(
                               'Email Akun',
                               style: TextStyle(
                                 fontSize: 13,
-                                color: isDark ? AppColors.textMediumDark : AppColors.textMedium,
+                                color: isDark
+                                    ? AppColors.textMediumDark
+                                    : AppColors.textMedium,
                               ),
                             ),
                           ],
@@ -178,7 +205,9 @@ class ProfileScreen extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 13,
                             fontWeight: FontWeight.w600,
-                            color: isDark ? AppColors.textHighDark : AppColors.textHigh,
+                            color: isDark
+                                ? AppColors.textHighDark
+                                : AppColors.textHigh,
                           ),
                         ),
                       ],
@@ -189,13 +218,19 @@ class ProfileScreen extends StatelessWidget {
                       children: [
                         Row(
                           children: [
-                            const Icon(Icons.wc_rounded, size: 18, color: AppColors.primary),
+                            const Icon(
+                              Icons.wc_rounded,
+                              size: 18,
+                              color: AppColors.primary,
+                            ),
                             const SizedBox(width: 10),
                             Text(
                               'Jenis Kelamin',
                               style: TextStyle(
                                 fontSize: 13,
-                                color: isDark ? AppColors.textMediumDark : AppColors.textMedium,
+                                color: isDark
+                                    ? AppColors.textMediumDark
+                                    : AppColors.textMedium,
                               ),
                             ),
                           ],
@@ -205,7 +240,9 @@ class ProfileScreen extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 13,
                             fontWeight: FontWeight.w600,
-                            color: isDark ? AppColors.textHighDark : AppColors.textHigh,
+                            color: isDark
+                                ? AppColors.textHighDark
+                                : AppColors.textHigh,
                           ),
                         ),
                       ],
@@ -225,7 +262,10 @@ class ProfileScreen extends StatelessWidget {
               const SizedBox(height: 12),
               NeumorphicCard(
                 borderRadius: 16,
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 8,
+                ),
                 child: Column(
                   children: [
                     Row(
@@ -234,7 +274,9 @@ class ProfileScreen extends StatelessWidget {
                         Row(
                           children: [
                             Icon(
-                              theme.isDarkMode ? Icons.dark_mode_rounded : Icons.light_mode_rounded,
+                              theme.isDarkMode
+                                  ? Icons.dark_mode_rounded
+                                  : Icons.light_mode_rounded,
                               size: 18,
                               color: AppColors.primary,
                             ),
@@ -244,7 +286,9 @@ class ProfileScreen extends StatelessWidget {
                               style: TextStyle(
                                 fontSize: 13,
                                 fontWeight: FontWeight.w600,
-                                color: isDark ? AppColors.textHighDark : AppColors.textHigh,
+                                color: isDark
+                                    ? AppColors.textHighDark
+                                    : AppColors.textHigh,
                               ),
                             ),
                           ],
@@ -264,23 +308,31 @@ class ProfileScreen extends StatelessWidget {
                         children: [
                           Row(
                             children: [
-                              const Icon(Icons.verified_user_outlined, size: 18, color: AppColors.primary),
+                              const Icon(
+                                Icons.verified_user_outlined,
+                                size: 18,
+                                color: AppColors.primary,
+                              ),
                               const SizedBox(width: 10),
                               Text(
                                 'Versi Aplikasi',
                                 style: TextStyle(
                                   fontSize: 13,
-                                  color: isDark ? AppColors.textMediumDark : AppColors.textMedium,
+                                  color: isDark
+                                      ? AppColors.textMediumDark
+                                      : AppColors.textMedium,
                                 ),
                               ),
                             ],
                           ),
                           Text(
-                            'AkuHadir v1.0.0 (PPKD)',
+                            'AbsenDulu v1.0.0 (PPKD)',
                             style: TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.w600,
-                              color: isDark ? AppColors.textHighDark : AppColors.textHigh,
+                              color: isDark
+                                  ? AppColors.textHighDark
+                                  : AppColors.textHigh,
                             ),
                           ),
                         ],
@@ -308,9 +360,14 @@ class ProfileScreen extends StatelessWidget {
                           child: const Text('Batal'),
                         ),
                         ElevatedButton(
-                          style: ElevatedButton.styleFrom(backgroundColor: AppColors.danger),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: AppColors.danger,
+                          ),
                           onPressed: () => Navigator.pop(dCtx, true),
-                          child: const Text('Keluar', style: TextStyle(color: Colors.white)),
+                          child: const Text(
+                            'Keluar',
+                            style: TextStyle(color: Colors.white),
+                          ),
                         ),
                       ],
                     ),

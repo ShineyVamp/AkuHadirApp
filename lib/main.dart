@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:device_preview/presets.dart';
-import 'package:akuhadir/core/services/storage_service.dart';
-import 'package:akuhadir/core/theme/app_theme.dart';
-import 'package:akuhadir/presentation/providers/attendance_provider.dart';
-import 'package:akuhadir/presentation/providers/auth_provider.dart';
-import 'package:akuhadir/presentation/providers/history_provider.dart';
-import 'package:akuhadir/presentation/providers/theme_provider.dart';
-import 'package:akuhadir/presentation/screens/splash/splash_screen.dart';
+import 'package:AbsenDulu/core/services/storage_service.dart';
+import 'package:AbsenDulu/core/theme/app_theme.dart';
+import 'package:AbsenDulu/presentation/providers/attendance_provider.dart';
+import 'package:AbsenDulu/presentation/providers/auth_provider.dart';
+import 'package:AbsenDulu/presentation/providers/history_provider.dart';
+import 'package:AbsenDulu/presentation/providers/theme_provider.dart';
+import 'package:AbsenDulu/presentation/screens/splash/splash_screen.dart';
 
 void main() async {
   DevicePreview.enable();
@@ -16,11 +16,11 @@ void main() async {
   final c = DevicePreview.controller;
   await c.applyPreset(DevicePresets.iPhone16e);
   await c.setOrientation(Orientation.portrait);
-  runApp(const AkuHadirApp());
+  runApp(const AbsenDuluApp());
 }
 
-class AkuHadirApp extends StatelessWidget {
-  const AkuHadirApp({super.key});
+class AbsenDuluApp extends StatelessWidget {
+  const AbsenDuluApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +34,7 @@ class AkuHadirApp extends StatelessWidget {
       child: Consumer<ThemeProvider>(
         builder: (context, themeProvider, _) {
           return MaterialApp(
-            title: 'AkuHadir - Presensi PPKD',
+            title: 'AbsenDulu - Presensi PPKD',
             debugShowCheckedModeBanner: false,
             theme: AppTheme.lightTheme,
             darkTheme: AppTheme.darkTheme,

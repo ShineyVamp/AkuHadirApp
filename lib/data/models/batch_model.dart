@@ -1,5 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:akuhadir/data/models/training_model.dart';
+import 'package:AbsenDulu/data/models/training_model.dart';
 part 'batch_model.g.dart';
 
 @JsonSerializable()
@@ -23,7 +23,8 @@ class BatchModel {
 
   String get displayName => 'Batch $batchKe';
 
-  factory BatchModel.fromJson(Map<String, dynamic> json) => _$BatchModelFromJson(json);
+  factory BatchModel.fromJson(Map<String, dynamic> json) =>
+      _$BatchModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$BatchModelToJson(this);
 }

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:akuhadir/core/constants/app_colors.dart';
-import 'package:akuhadir/presentation/providers/auth_provider.dart';
-import 'package:akuhadir/presentation/widgets/custom_snackbar.dart';
-import 'package:akuhadir/presentation/widgets/neumorphic_button.dart';
-import 'package:akuhadir/presentation/widgets/neumorphic_text_field.dart';
+import 'package:AbsenDulu/core/constants/app_colors.dart';
+import 'package:AbsenDulu/presentation/providers/auth_provider.dart';
+import 'package:AbsenDulu/presentation/widgets/custom_snackbar.dart';
+import 'package:AbsenDulu/presentation/widgets/neumorphic_button.dart';
+import 'package:AbsenDulu/presentation/widgets/neumorphic_text_field.dart';
 
 class ForgotPasswordDialog extends StatefulWidget {
   const ForgotPasswordDialog({super.key});

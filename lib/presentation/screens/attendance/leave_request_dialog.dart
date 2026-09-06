@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:akuhadir/core/constants/app_colors.dart';import 'package:akuhadir/core/utils/date_formatter.dart';import 'package:akuhadir/presentation/providers/attendance_provider.dart';import 'package:akuhadir/presentation/widgets/custom_snackbar.dart';import 'package:akuhadir/presentation/widgets/neumorphic_button.dart';import 'package:akuhadir/presentation/widgets/neumorphic_text_field.dart';
+import 'package:AbsenDulu/core/constants/app_colors.dart';
+import 'package:AbsenDulu/core/utils/date_formatter.dart';
+import 'package:AbsenDulu/presentation/providers/attendance_provider.dart';
+import 'package:AbsenDulu/presentation/widgets/custom_snackbar.dart';
+import 'package:AbsenDulu/presentation/widgets/neumorphic_button.dart';
+import 'package:AbsenDulu/presentation/widgets/neumorphic_text_field.dart';
+
 class LeaveRequestDialog extends StatefulWidget {
   const LeaveRequestDialog({super.key});
 
@@ -33,7 +39,10 @@ class _LeaveRequestDialogState extends State<LeaveRequestDialog> {
       CustomSnackBar.showSuccess(context, 'Surat izin berhasil diajukan');
       Navigator.pop(context);
     } else {
-      CustomSnackBar.showError(context, attendance.errorMessage ?? 'Gagal mengajukan izin');
+      CustomSnackBar.showError(
+        context,
+        attendance.errorMessage ?? 'Gagal mengajukan izin',
+      );
     }
   }
 
@@ -60,7 +69,9 @@ class _LeaveRequestDialogState extends State<LeaveRequestDialog> {
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w700,
-                      color: isDark ? AppColors.textHighDark : AppColors.textHigh,
+                      color: isDark
+                          ? AppColors.textHighDark
+                          : AppColors.textHigh,
                     ),
                   ),
                   IconButton(
@@ -82,7 +93,8 @@ class _LeaveRequestDialogState extends State<LeaveRequestDialog> {
               NeumorphicTextField(
                 controller: _reasonController,
                 labelText: 'Keterangan / Alasan Izin',
-                hintText: 'Cth. Izin tidak bisa hadir karena sakit demam / urusan keluarga mendesak',
+                hintText:
+                    'Cth. Izin tidak bisa hadir karena sakit demam / urusan keluarga mendesak',
                 maxLines: 4,
               ),
               const SizedBox(height: 20),
@@ -93,7 +105,10 @@ class _LeaveRequestDialogState extends State<LeaveRequestDialog> {
                 onPressed: _handleSubmit,
                 child: const Text(
                   'Kirim Surat Izin',
-                  style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700),
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w700,
+                  ),
                 ),
               ),
             ],

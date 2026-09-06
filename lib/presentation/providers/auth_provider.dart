@@ -1,6 +1,9 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:akuhadir/core/services/storage_service.dart';import 'package:akuhadir/data/models/user_model.dart';import 'package:akuhadir/data/repositories/auth_repository.dart';
+import 'package:AbsenDulu/core/services/storage_service.dart';
+import 'package:AbsenDulu/data/models/user_model.dart';
+import 'package:AbsenDulu/data/repositories/auth_repository.dart';
+
 class AuthProvider extends ChangeNotifier {
   final AuthRepository _repository = AuthRepository();
 
@@ -11,7 +14,9 @@ class AuthProvider extends ChangeNotifier {
   UserModel? get user => _user;
   bool get isLoading => _isLoading;
   String? get errorMessage => _errorMessage;
-  bool get isAuthenticated => StorageService.getToken() != null && StorageService.getToken()!.isNotEmpty;
+  bool get isAuthenticated =>
+      StorageService.getToken() != null &&
+      StorageService.getToken()!.isNotEmpty;
 
   AuthProvider() {
     _initUser();

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:akuhadir/presentation/screens/dashboard/dashboard_screen.dart';
-import 'package:akuhadir/presentation/screens/history/history_screen.dart';
-import 'package:akuhadir/presentation/screens/profile/profile_screen.dart';
-import 'package:akuhadir/presentation/providers/auth_provider.dart';
-import 'package:akuhadir/presentation/providers/history_provider.dart';
+import 'package:AbsenDulu/presentation/screens/dashboard/dashboard_screen.dart';
+import 'package:AbsenDulu/presentation/screens/history/history_screen.dart';
+import 'package:AbsenDulu/presentation/screens/profile/profile_screen.dart';
+import 'package:AbsenDulu/presentation/providers/auth_provider.dart';
+import 'package:AbsenDulu/presentation/providers/history_provider.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -41,7 +41,10 @@ class _MainScreenState extends State<MainScreen> {
         onTap: () {
           setState(() => _currentIndex = index);
           if (index == 1) {
-            Provider.of<HistoryProvider>(context, listen: false).refreshHistory();
+            Provider.of<HistoryProvider>(
+              context,
+              listen: false,
+            ).refreshHistory();
           }
         },
         behavior: HitTestBehavior.opaque,
@@ -90,7 +93,11 @@ class _MainScreenState extends State<MainScreen> {
                 child: ConstrainedBox(
                   constraints: const BoxConstraints(maxWidth: 800),
                   child: Container(
-                    margin: const EdgeInsets.only(left: 18, right: 18, bottom: 12),
+                    margin: const EdgeInsets.only(
+                      left: 18,
+                      right: 18,
+                      bottom: 12,
+                    ),
                     padding: const EdgeInsets.all(4),
                     decoration: BoxDecoration(
                       color: isDark ? const Color(0xFF1B2230) : Colors.white,
@@ -121,7 +128,9 @@ class _MainScreenState extends State<MainScreen> {
                               bottom: 2,
                               width: itemWidth,
                               child: Container(
-                                margin: const EdgeInsets.symmetric(horizontal: 4),
+                                margin: const EdgeInsets.symmetric(
+                                  horizontal: 4,
+                                ),
                                 decoration: BoxDecoration(
                                   color: const Color(0xFF2C54D8),
                                   borderRadius: BorderRadius.circular(26),

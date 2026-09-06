@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
-import 'package:akuhadir/core/constants/app_colors.dart';import 'package:akuhadir/core/utils/image_helper.dart';import 'package:akuhadir/presentation/providers/auth_provider.dart';import 'package:akuhadir/presentation/widgets/custom_snackbar.dart';import 'package:akuhadir/presentation/widgets/neumorphic_button.dart';import 'package:akuhadir/presentation/widgets/neumorphic_text_field.dart';
+import 'package:AbsenDulu/core/constants/app_colors.dart';
+import 'package:AbsenDulu/core/utils/image_helper.dart';
+import 'package:AbsenDulu/presentation/providers/auth_provider.dart';
+import 'package:AbsenDulu/presentation/widgets/custom_snackbar.dart';
+import 'package:AbsenDulu/presentation/widgets/neumorphic_button.dart';
+import 'package:AbsenDulu/presentation/widgets/neumorphic_text_field.dart';
+
 class EditProfileDialog extends StatefulWidget {
   const EditProfileDialog({super.key});
 
@@ -41,20 +47,31 @@ class _EditProfileDialogState extends State<EditProfileDialog> {
       CustomSnackBar.showSuccess(context, 'Profil berhasil diperbarui');
       Navigator.pop(context);
     } else {
-      CustomSnackBar.showError(context, auth.errorMessage ?? 'Gagal memperbarui profil');
+      CustomSnackBar.showError(
+        context,
+        auth.errorMessage ?? 'Gagal memperbarui profil',
+      );
     }
   }
 
   Future<void> _handlePickPhoto() async {
-    final base64Image = await ImageHelper.pickImageAsBase64(source: ImageSource.gallery);
+    final base64Image = await ImageHelper.pickImageAsBase64(
+      source: ImageSource.gallery,
+    );
     if (base64Image != null && mounted) {
       final auth = Provider.of<AuthProvider>(context, listen: false);
       final success = await auth.updateProfilePhoto(base64Image);
       if (mounted) {
         if (success) {
-          CustomSnackBar.showSuccess(context, 'Foto profil berhasil diperbarui');
+          CustomSnackBar.showSuccess(
+            context,
+            'Foto profil berhasil diperbarui',
+          );
         } else {
-          CustomSnackBar.showError(context, auth.errorMessage ?? 'Gagal memperbarui foto');
+          CustomSnackBar.showError(
+            context,
+            auth.errorMessage ?? 'Gagal memperbarui foto',
+          );
         }
       }
     }
@@ -83,7 +100,9 @@ class _EditProfileDialogState extends State<EditProfileDialog> {
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w700,
-                      color: isDark ? AppColors.textHighDark : AppColors.textHigh,
+                      color: isDark
+                          ? AppColors.textHighDark
+                          : AppColors.textHigh,
                     ),
                   ),
                   IconButton(
@@ -99,7 +118,11 @@ class _EditProfileDialogState extends State<EditProfileDialog> {
                 child: const Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(Icons.photo_camera_rounded, size: 18, color: AppColors.primary),
+                    Icon(
+                      Icons.photo_camera_rounded,
+                      size: 18,
+                      color: AppColors.primary,
+                    ),
                     SizedBox(width: 8),
                     Text(
                       'Ganti Foto Profil',
@@ -117,7 +140,11 @@ class _EditProfileDialogState extends State<EditProfileDialog> {
                 controller: _nameController,
                 labelText: 'Nama Lengkap',
                 hintText: 'Nama lengkap Anda',
-                prefixIcon: const Icon(Icons.person_outline_rounded, size: 18, color: AppColors.primary),
+                prefixIcon: const Icon(
+                  Icons.person_outline_rounded,
+                  size: 18,
+                  color: AppColors.primary,
+                ),
               ),
               const SizedBox(height: 20),
               NeumorphicButton(
@@ -126,7 +153,10 @@ class _EditProfileDialogState extends State<EditProfileDialog> {
                 onPressed: _handleSave,
                 child: const Text(
                   'Simpan Perubahan',
-                  style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700),
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w700,
+                  ),
                 ),
               ),
             ],

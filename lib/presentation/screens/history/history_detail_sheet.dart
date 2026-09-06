@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:akuhadir/core/constants/app_colors.dart';
-import 'package:akuhadir/core/utils/date_formatter.dart';
-import 'package:akuhadir/data/models/attendance_model.dart';
-import 'package:akuhadir/presentation/providers/attendance_provider.dart';
-import 'package:akuhadir/presentation/providers/history_provider.dart';
-import 'package:akuhadir/presentation/widgets/custom_snackbar.dart';
-import 'package:akuhadir/presentation/widgets/neumorphic_button.dart';
-import 'package:akuhadir/presentation/widgets/neumorphic_status_chip.dart';
+import 'package:AbsenDulu/core/constants/app_colors.dart';
+import 'package:AbsenDulu/core/utils/date_formatter.dart';
+import 'package:AbsenDulu/data/models/attendance_model.dart';
+import 'package:AbsenDulu/presentation/providers/attendance_provider.dart';
+import 'package:AbsenDulu/presentation/providers/history_provider.dart';
+import 'package:AbsenDulu/presentation/widgets/custom_snackbar.dart';
+import 'package:AbsenDulu/presentation/widgets/neumorphic_button.dart';
+import 'package:AbsenDulu/presentation/widgets/neumorphic_status_chip.dart';
 
 class HistoryDetailSheet extends StatelessWidget {
   final AttendanceModel attendance;
@@ -38,7 +38,10 @@ class HistoryDetailSheet extends StatelessWidget {
 
     if (confirmed == true && context.mounted) {
       final historyProv = Provider.of<HistoryProvider>(context, listen: false);
-      final attendanceProv = Provider.of<AttendanceProvider>(context, listen: false);
+      final attendanceProv = Provider.of<AttendanceProvider>(
+        context,
+        listen: false,
+      );
       if (attendance.id != null) {
         final success = await historyProv.deleteAttendance(attendance.id!);
         if (context.mounted) {
@@ -51,7 +54,10 @@ class HistoryDetailSheet extends StatelessWidget {
               await attendanceProv.loadStats();
             }
             if (!context.mounted) return;
-            CustomSnackBar.showSuccess(context, 'Data presensi berhasil dihapus');
+            CustomSnackBar.showSuccess(
+              context,
+              'Data presensi berhasil dihapus',
+            );
             Navigator.pop(context);
           } else {
             CustomSnackBar.showError(
@@ -104,20 +110,27 @@ class HistoryDetailSheet extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 20),
-          if (attendance.status?.toLowerCase() == 'izin' && attendance.alasanIzin != null) ...[
+          if (attendance.status?.toLowerCase() == 'izin' &&
+              attendance.alasanIzin != null) ...[
             Container(
               padding: const EdgeInsets.all(14),
               decoration: BoxDecoration(
                 color: AppColors.warning.withValues(alpha: 0.12),
                 borderRadius: BorderRadius.circular(14),
-                border: Border.all(color: AppColors.warning.withValues(alpha: 0.3)),
+                border: Border.all(
+                  color: AppColors.warning.withValues(alpha: 0.3),
+                ),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Row(
                     children: [
-                      Icon(Icons.description_rounded, size: 16, color: AppColors.warning),
+                      Icon(
+                        Icons.description_rounded,
+                        size: 16,
+                        color: AppColors.warning,
+                      ),
                       SizedBox(width: 6),
                       Text(
                         'Alasan / Surat Izin',
@@ -134,7 +147,9 @@ class HistoryDetailSheet extends StatelessWidget {
                     attendance.alasanIzin!,
                     style: TextStyle(
                       fontSize: 13,
-                      color: isDark ? AppColors.textHighDark : AppColors.textHigh,
+                      color: isDark
+                          ? AppColors.textHighDark
+                          : AppColors.textHigh,
                     ),
                   ),
                 ],
@@ -156,11 +171,18 @@ class HistoryDetailSheet extends StatelessWidget {
                     children: [
                       const Row(
                         children: [
-                          Icon(Icons.login_rounded, size: 14, color: AppColors.primary),
+                          Icon(
+                            Icons.login_rounded,
+                            size: 14,
+                            color: AppColors.primary,
+                          ),
                           SizedBox(width: 4),
                           Text(
                             'Jam Masuk',
-                            style: TextStyle(fontSize: 11, color: AppColors.textMedium),
+                            style: TextStyle(
+                              fontSize: 11,
+                              color: AppColors.textMedium,
+                            ),
                           ),
                         ],
                       ),
@@ -170,7 +192,9 @@ class HistoryDetailSheet extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w700,
-                          color: isDark ? AppColors.textHighDark : AppColors.textHigh,
+                          color: isDark
+                              ? AppColors.textHighDark
+                              : AppColors.textHigh,
                         ),
                       ),
                     ],
@@ -190,11 +214,18 @@ class HistoryDetailSheet extends StatelessWidget {
                     children: [
                       const Row(
                         children: [
-                          Icon(Icons.logout_rounded, size: 14, color: AppColors.success),
+                          Icon(
+                            Icons.logout_rounded,
+                            size: 14,
+                            color: AppColors.success,
+                          ),
                           SizedBox(width: 4),
                           Text(
                             'Jam Pulang',
-                            style: TextStyle(fontSize: 11, color: AppColors.textMedium),
+                            style: TextStyle(
+                              fontSize: 11,
+                              color: AppColors.textMedium,
+                            ),
                           ),
                         ],
                       ),
@@ -204,7 +235,9 @@ class HistoryDetailSheet extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w700,
-                          color: isDark ? AppColors.textHighDark : AppColors.textHigh,
+                          color: isDark
+                              ? AppColors.textHighDark
+                              : AppColors.textHigh,
                         ),
                       ),
                     ],
@@ -225,11 +258,18 @@ class HistoryDetailSheet extends StatelessWidget {
               children: [
                 const Row(
                   children: [
-                    Icon(Icons.my_location_rounded, size: 14, color: AppColors.primary),
+                    Icon(
+                      Icons.my_location_rounded,
+                      size: 14,
+                      color: AppColors.primary,
+                    ),
                     SizedBox(width: 4),
                     Text(
                       'Koordinat Lokasi Presensi',
-                      style: TextStyle(fontSize: 11, color: AppColors.textMedium),
+                      style: TextStyle(
+                        fontSize: 11,
+                        color: AppColors.textMedium,
+                      ),
                     ),
                   ],
                 ),
@@ -254,11 +294,18 @@ class HistoryDetailSheet extends StatelessWidget {
               child: const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.delete_outline_rounded, color: Colors.white, size: 18),
+                  Icon(
+                    Icons.delete_outline_rounded,
+                    color: Colors.white,
+                    size: 18,
+                  ),
                   SizedBox(width: 6),
                   Text(
                     'Hapus Catatan Presensi Ini',
-                    style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700),
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w700,
+                    ),
                   ),
                 ],
               ),

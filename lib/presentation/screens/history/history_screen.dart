@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:akuhadir/core/constants/app_colors.dart';
-import 'package:akuhadir/core/utils/date_formatter.dart';
-import 'package:akuhadir/presentation/providers/history_provider.dart';
-import 'package:akuhadir/presentation/widgets/neumorphic_card.dart';
-import 'package:akuhadir/presentation/widgets/neumorphic_status_chip.dart';
-import 'package:akuhadir/presentation/screens/history/history_detail_sheet.dart';
+import 'package:AbsenDulu/core/constants/app_colors.dart';
+import 'package:AbsenDulu/core/utils/date_formatter.dart';
+import 'package:AbsenDulu/presentation/providers/history_provider.dart';
+import 'package:AbsenDulu/presentation/widgets/neumorphic_card.dart';
+import 'package:AbsenDulu/presentation/widgets/neumorphic_status_chip.dart';
+import 'package:AbsenDulu/presentation/screens/history/history_detail_sheet.dart';
 
 class HistoryScreen extends StatelessWidget {
   const HistoryScreen({super.key});

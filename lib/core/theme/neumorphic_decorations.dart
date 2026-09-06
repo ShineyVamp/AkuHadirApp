@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:akuhadir/core/constants/app_colors.dart';
+import 'package:AbsenDulu/core/constants/app_colors.dart';
+
 class NeumorphicDecorations {
   static BoxDecoration extruded({
     required bool isDark,
@@ -8,7 +9,8 @@ class NeumorphicDecorations {
     BoxShape shape = BoxShape.rectangle,
     Border? border,
   }) {
-    final baseColor = color ?? (isDark ? AppColors.cardBgDark : AppColors.cardBg);
+    final baseColor =
+        color ?? (isDark ? AppColors.cardBgDark : AppColors.cardBg);
     final shadowDark = isDark
         ? AppColors.darkShadowDark.withValues(alpha: 0.8)
         : AppColors.shadowDark.withValues(alpha: 0.6);
@@ -19,7 +21,9 @@ class NeumorphicDecorations {
     return BoxDecoration(
       color: baseColor,
       shape: shape,
-      borderRadius: shape == BoxShape.circle ? null : BorderRadius.circular(borderRadius),
+      borderRadius: shape == BoxShape.circle
+          ? null
+          : BorderRadius.circular(borderRadius),
       border: border,
       boxShadow: [
         BoxShadow(
@@ -45,7 +49,8 @@ class NeumorphicDecorations {
     BoxShape shape = BoxShape.rectangle,
     Border? border,
   }) {
-    final baseColor = color ?? (isDark ? AppColors.cardBgDark : AppColors.cardBg);
+    final baseColor =
+        color ?? (isDark ? AppColors.cardBgDark : AppColors.cardBg);
     final shadowDark = isDark
         ? AppColors.darkShadowDark.withValues(alpha: 0.7)
         : AppColors.shadowDark.withValues(alpha: 0.5);
@@ -56,7 +61,9 @@ class NeumorphicDecorations {
     return BoxDecoration(
       color: baseColor,
       shape: shape,
-      borderRadius: shape == BoxShape.circle ? null : BorderRadius.circular(borderRadius),
+      borderRadius: shape == BoxShape.circle
+          ? null
+          : BorderRadius.circular(borderRadius),
       border: border,
       boxShadow: [
         BoxShadow(
@@ -81,7 +88,8 @@ class NeumorphicDecorations {
     Color? color,
     Border? border,
   }) {
-    final baseColor = color ?? (isDark ? const Color(0xFF131922) : AppColors.cardBg);
+    final baseColor =
+        color ?? (isDark ? const Color(0xFF131922) : AppColors.cardBg);
     final shadowDark = isDark
         ? AppColors.darkShadowDark.withValues(alpha: 0.6)
         : AppColors.shadowDark.withValues(alpha: 0.4);
@@ -89,18 +97,11 @@ class NeumorphicDecorations {
     return BoxDecoration(
       color: baseColor,
       borderRadius: BorderRadius.circular(borderRadius),
-      border: border ??
-          Border.all(
-            color: shadowDark,
-            width: 1,
-          ),
+      border: border ?? Border.all(color: shadowDark, width: 1),
     );
   }
 
-  static BoxDecoration primaryPill({
-    Color? color,
-    double borderRadius = 18,
-  }) {
+  static BoxDecoration primaryPill({Color? color, double borderRadius = 18}) {
     final btnColor = color ?? AppColors.primary;
     return BoxDecoration(
       color: btnColor,

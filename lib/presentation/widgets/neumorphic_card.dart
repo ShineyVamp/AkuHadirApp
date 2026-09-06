@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:akuhadir/core/theme/neumorphic_decorations.dart';
+import 'package:AbsenDulu/core/theme/neumorphic_decorations.dart';
+
 class NeumorphicCard extends StatelessWidget {
   final Widget child;
   final EdgeInsetsGeometry? padding;
@@ -44,10 +45,7 @@ class NeumorphicCard extends StatelessWidget {
     );
 
     if (onTap != null) {
-      return GestureDetector(
-        onTap: onTap,
-        child: content,
-      );
+      return GestureDetector(onTap: onTap, child: content);
     }
 
     return content;
