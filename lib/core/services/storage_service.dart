@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class StorageService {
@@ -66,5 +67,29 @@ class StorageService {
   static Future<void> clearAll() async {
     await _prefs?.remove(_keyToken);
     await _prefs?.remove(_keyUser);
+    final keys = _prefs?.getKeys() ?? {};
+    for (final key in keys) {
+      if (key.startsWith('user_meta_') ||
+          key.startsWith('today_attendance_') ||
+          key.startsWith('history_')) {
+        await _prefs?.remove(key);
+      }
+    }
+  }
+
+  static Future<void> saveUserMeta(String userKey, Map<String, dynamic> meta) async {
+    await _prefs?.setString('user_meta_$userKey', jsonEncode(meta));
+  }
+
+  static Map<String, dynamic>? getUserMeta(String userKey) {
+    final raw = _prefs?.getString('user_meta_$userKey');
+    if (raw != null && raw.isNotEmpty) {
+      try {
+        return jsonDecode(raw) as Map<String, dynamic>;
+      } catch (_) {
+        return null;
+      }
+    }
+    return null;
   }
 }

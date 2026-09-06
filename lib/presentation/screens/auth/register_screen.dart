@@ -11,6 +11,7 @@ import 'package:absendulu/presentation/providers/auth_provider.dart';
 import 'package:absendulu/presentation/widgets/custom_snackbar.dart';
 import 'package:absendulu/presentation/widgets/neumorphic_button.dart';
 import 'package:absendulu/presentation/widgets/neumorphic_text_field.dart';
+import 'package:absendulu/presentation/widgets/neumorphic_skeleton.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -140,9 +141,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       ),
       body: SafeArea(
         child: _isLoadingMaster
-            ? const Center(
-                child: CircularProgressIndicator(color: AppColors.primary),
-              )
+            ? const RegisterFormSkeleton()
             : SingleChildScrollView(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 24,

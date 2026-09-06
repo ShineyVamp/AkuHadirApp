@@ -71,10 +71,53 @@ class DashboardScreen extends StatelessWidget {
       subButtonText = 'SUDAH PULANG';
     }
 
+    final String checkInTimeDisplay = today != null && today.isCheckedIn
+        ? today.effectiveCheckInTime
+        : '--:--';
+    final String checkOutTimeDisplay = today != null && today.isCheckedOut
+        ? today.effectiveCheckOutTime
+        : '--:--';
+
+    final String checkInStatusText;
+    final Color checkInStatusColor;
+    if (isIzin) {
+      checkInStatusText = 'Izin';
+      checkInStatusColor = AppColors.warning;
+    } else if (hasCheckedIn) {
+      if (today.isLate) {
+        checkInStatusText = 'Terlambat';
+        checkInStatusColor = const Color(0xFFF59E0B);
+      } else {
+        checkInStatusText = 'Tepat Waktu';
+        checkInStatusColor = AppColors.success;
+      }
+    } else {
+      checkInStatusText = 'Belum Masuk';
+      checkInStatusColor = isDark
+          ? AppColors.textMediumDark
+          : AppColors.textMedium;
+    }
+
+    final String checkOutStatusText;
+    final Color checkOutStatusColor;
+    if (isIzin) {
+      checkOutStatusText = 'Izin';
+      checkOutStatusColor = AppColors.warning;
+    } else if (hasCheckedOut) {
+      checkOutStatusText = 'Selesai';
+      checkOutStatusColor = AppColors.success;
+    } else if (hasCheckedIn) {
+      checkOutStatusText = 'Belum Pulang';
+      checkOutStatusColor = const Color(0xFFF59E0B);
+    } else {
+      checkOutStatusText = 'Belum Masuk';
+      checkOutStatusColor = isDark
+          ? AppColors.textMediumDark
+          : AppColors.textMedium;
+    }
+
     void handleAttendanceTap() async {
-      await context.push(
-        GpsVerificationScreen(isCheckIn: isCheckInAction),
-      );
+      await context.push(GpsVerificationScreen(isCheckIn: isCheckInAction));
       await attendance.loadTodayAttendance();
       await attendance.loadStats();
     }
@@ -104,9 +147,9 @@ class DashboardScreen extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Halo, $userName 👋',
+                                'Halo, $userName',
                                 style: TextStyle(
-                                  fontSize: 20 * fontScale,
+                                  fontSize: 30 * fontScale,
                                   fontWeight: FontWeight.w700,
                                   color: isDark
                                       ? AppColors.textHighDark
@@ -326,7 +369,149 @@ class DashboardScreen extends StatelessWidget {
                               ),
                             ),
                           ),
-                          const SizedBox(height: 10),
+                          const SizedBox(height: 20),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: Container(
+                                  decoration: NeumorphicDecorations.extrudedSm(
+                                    isDark: isDark,
+                                    borderRadius: 16,
+                                  ),
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 14,
+                                    vertical: 14,
+                                  ),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Container(
+                                            padding: const EdgeInsets.all(6),
+                                            decoration: BoxDecoration(
+                                              color: const Color(
+                                                0xFF10B981,
+                                              ).withValues(alpha: 0.15),
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
+                                            ),
+                                            child: const Icon(
+                                              Icons.login_rounded,
+                                              size: 16,
+                                              color: Color(0xFF10B981),
+                                            ),
+                                          ),
+                                          const SizedBox(width: 8),
+                                          Text(
+                                            'Masuk',
+                                            style: TextStyle(
+                                              fontSize: 12 * fontScale,
+                                              fontWeight: FontWeight.w600,
+                                              color: isDark
+                                                  ? AppColors.textMediumDark
+                                                  : AppColors.textMedium,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      const SizedBox(height: 10),
+                                      Text(
+                                        checkInTimeDisplay,
+                                        style: TextStyle(
+                                          fontSize: 18 * fontScale,
+                                          fontWeight: FontWeight.w800,
+                                          color: isDark
+                                              ? AppColors.textHighDark
+                                              : const Color(0xFF0F172A),
+                                        ),
+                                      ),
+                                      const SizedBox(height: 3),
+                                      Text(
+                                        checkInStatusText,
+                                        style: TextStyle(
+                                          fontSize: 11 * fontScale,
+                                          fontWeight: FontWeight.w600,
+                                          color: checkInStatusColor,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(width: 12),
+                              Expanded(
+                                child: Container(
+                                  decoration: NeumorphicDecorations.extrudedSm(
+                                    isDark: isDark,
+                                    borderRadius: 16,
+                                  ),
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 14,
+                                    vertical: 14,
+                                  ),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Container(
+                                            padding: const EdgeInsets.all(6),
+                                            decoration: BoxDecoration(
+                                              color: const Color(
+                                                0xFF2C54D8,
+                                              ).withValues(alpha: 0.15),
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
+                                            ),
+                                            child: const Icon(
+                                              Icons.logout_rounded,
+                                              size: 16,
+                                              color: Color(0xFF2C54D8),
+                                            ),
+                                          ),
+                                          const SizedBox(width: 8),
+                                          Text(
+                                            'Pulang',
+                                            style: TextStyle(
+                                              fontSize: 12 * fontScale,
+                                              fontWeight: FontWeight.w600,
+                                              color: isDark
+                                                  ? AppColors.textMediumDark
+                                                  : AppColors.textMedium,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      const SizedBox(height: 10),
+                                      Text(
+                                        checkOutTimeDisplay,
+                                        style: TextStyle(
+                                          fontSize: 18 * fontScale,
+                                          fontWeight: FontWeight.w800,
+                                          color: isDark
+                                              ? AppColors.textHighDark
+                                              : const Color(0xFF0F172A),
+                                        ),
+                                      ),
+                                      const SizedBox(height: 3),
+                                      Text(
+                                        checkOutStatusText,
+                                        style: TextStyle(
+                                          fontSize: 11 * fontScale,
+                                          fontWeight: FontWeight.w600,
+                                          color: checkOutStatusColor,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 4),
                         ],
                       ),
                     ),

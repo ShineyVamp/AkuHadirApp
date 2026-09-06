@@ -1,51 +1,45 @@
-import 'dart:convert';
-import 'package:http/http.dart' as http;
+import 'package:dio/dio.dart';
 import 'package:absendulu/core/services/storage_service.dart';
 import 'package:absendulu/core/network/api_exception.dart';
 
 class ApiClient {
-  final http.Client _client = http.Client();
+  late final Dio _dio;
 
-  Map<String, String> _getHeaders({
-    bool withAuth = true,
-    Map<String, String>? extraHeaders,
-  }) {
-    final headers = <String, String>{
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-    };
+  ApiClient() {
+    _dio = Dio(
+      BaseOptions(
+        connectTimeout: const Duration(seconds: 15),
+        receiveTimeout: const Duration(seconds: 15),
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+      ),
+    );
 
-    if (withAuth) {
-      final token = StorageService.getToken();
-      if (token != null && token.isNotEmpty) {
-        headers['Authorization'] = 'Bearer $token';
-      }
-    }
-
-    if (extraHeaders != null) {
-      headers.addAll(extraHeaders);
-    }
-
-    return headers;
+    _dio.interceptors.add(
+      InterceptorsWrapper(
+        onRequest: (options, handler) {
+          final withAuth = options.extra['withAuth'] ?? true;
+          if (withAuth) {
+            final token = StorageService.getToken();
+            if (token != null && token.isNotEmpty) {
+              options.headers['Authorization'] = 'Bearer $token';
+            }
+          }
+          return handler.next(options);
+        },
+      ),
+    );
   }
 
-  dynamic _processResponse(http.Response response) {
-    dynamic body;
-    try {
-      body = jsonDecode(response.body);
-    } catch (_) {
-      body = null;
-    }
-
-    if (response.statusCode >= 200 && response.statusCode < 300) {
-      return body;
-    }
-
-    String errorMessage =
-        'Terjadi kesalahan pada server (${response.statusCode})';
+  Never _handleDioException(DioException e) {
+    String errorMessage = 'Gagal terhubung ke server';
+    int? statusCode = e.response?.statusCode;
     dynamic errors;
 
-    if (body is Map<String, dynamic>) {
+    if (e.response?.data != null && e.response?.data is Map<String, dynamic>) {
+      final body = e.response!.data as Map<String, dynamic>;
       if (body.containsKey('message') && body['message'] != null) {
         errorMessage = body['message'].toString();
       }
@@ -61,11 +55,16 @@ class ApiClient {
           }
         }
       }
+    } else if (e.type == DioExceptionType.connectionTimeout ||
+        e.type == DioExceptionType.receiveTimeout) {
+      errorMessage = 'Koneksi ke server batas waktu habis (timeout)';
+    } else if (e.message != null && e.message!.isNotEmpty) {
+      errorMessage = e.message!;
     }
 
     throw ApiException(
       message: errorMessage,
-      statusCode: response.statusCode,
+      statusCode: statusCode,
       errors: errors,
     );
   }
@@ -74,16 +73,22 @@ class ApiClient {
     String url, {
     bool withAuth = true,
     Map<String, String>? headers,
+    Map<String, dynamic>? queryParameters,
   }) async {
     try {
-      final response = await _client.get(
-        Uri.parse(url),
-        headers: _getHeaders(withAuth: withAuth, extraHeaders: headers),
+      final response = await _dio.get(
+        url,
+        queryParameters: queryParameters,
+        options: Options(
+          headers: headers,
+          extra: {'withAuth': withAuth},
+        ),
       );
-      return _processResponse(response);
-    } on ApiException {
-      rethrow;
+      return response.data;
+    } on DioException catch (e) {
+      _handleDioException(e);
     } catch (e) {
+      if (e is ApiException) rethrow;
       throw ApiException(message: 'Gagal terhubung ke server: ${e.toString()}');
     }
   }
@@ -95,15 +100,19 @@ class ApiClient {
     Map<String, String>? headers,
   }) async {
     try {
-      final response = await _client.post(
-        Uri.parse(url),
-        headers: _getHeaders(withAuth: withAuth, extraHeaders: headers),
-        body: body != null ? jsonEncode(body) : null,
+      final response = await _dio.post(
+        url,
+        data: body,
+        options: Options(
+          headers: headers,
+          extra: {'withAuth': withAuth},
+        ),
       );
-      return _processResponse(response);
-    } on ApiException {
-      rethrow;
+      return response.data;
+    } on DioException catch (e) {
+      _handleDioException(e);
     } catch (e) {
+      if (e is ApiException) rethrow;
       throw ApiException(message: 'Gagal terhubung ke server: ${e.toString()}');
     }
   }
@@ -115,15 +124,19 @@ class ApiClient {
     Map<String, String>? headers,
   }) async {
     try {
-      final response = await _client.put(
-        Uri.parse(url),
-        headers: _getHeaders(withAuth: withAuth, extraHeaders: headers),
-        body: body != null ? jsonEncode(body) : null,
+      final response = await _dio.put(
+        url,
+        data: body,
+        options: Options(
+          headers: headers,
+          extra: {'withAuth': withAuth},
+        ),
       );
-      return _processResponse(response);
-    } on ApiException {
-      rethrow;
+      return response.data;
+    } on DioException catch (e) {
+      _handleDioException(e);
     } catch (e) {
+      if (e is ApiException) rethrow;
       throw ApiException(message: 'Gagal terhubung ke server: ${e.toString()}');
     }
   }
@@ -134,14 +147,18 @@ class ApiClient {
     Map<String, String>? headers,
   }) async {
     try {
-      final response = await _client.delete(
-        Uri.parse(url),
-        headers: _getHeaders(withAuth: withAuth, extraHeaders: headers),
+      final response = await _dio.delete(
+        url,
+        options: Options(
+          headers: headers,
+          extra: {'withAuth': withAuth},
+        ),
       );
-      return _processResponse(response);
-    } on ApiException {
-      rethrow;
+      return response.data;
+    } on DioException catch (e) {
+      _handleDioException(e);
     } catch (e) {
+      if (e is ApiException) rethrow;
       throw ApiException(message: 'Gagal terhubung ke server: ${e.toString()}');
     }
   }

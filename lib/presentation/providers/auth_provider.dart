@@ -95,13 +95,25 @@ class AuthProvider extends ChangeNotifier {
     } catch (_) {}
   }
 
-  Future<bool> updateProfile(String name) async {
+  Future<bool> updateProfile({
+    required String name,
+    String? email,
+    String? jenisKelamin,
+    dynamic batchId,
+    dynamic trainingId,
+  }) async {
     _isLoading = true;
     _errorMessage = null;
     notifyListeners();
 
     try {
-      _user = await _repository.updateProfile(name);
+      _user = await _repository.updateProfile(
+        name: name,
+        email: email,
+        jenisKelamin: jenisKelamin,
+        batchId: batchId,
+        trainingId: trainingId,
+      );
       _isLoading = false;
       notifyListeners();
       return true;
@@ -113,16 +125,18 @@ class AuthProvider extends ChangeNotifier {
     }
   }
 
-  Future<bool> updateProfilePhoto(String base64Photo) async {
+  Future<bool> updateProfilePhoto(String base64DataUri) async {
     _isLoading = true;
     _errorMessage = null;
     notifyListeners();
 
     try {
-      final photoUrl = await _repository.updateProfilePhoto(base64Photo);
-      if (_user != null) {
+      final photoUrl = await _repository.updateProfilePhoto(base64DataUri);
+      if (photoUrl.isNotEmpty && _user != null) {
         _user = _user!.copyWith(profilePhoto: photoUrl);
         await StorageService.saveUserData(jsonEncode(_user!.toJson()));
+      } else {
+        await fetchProfile();
       }
       _isLoading = false;
       notifyListeners();

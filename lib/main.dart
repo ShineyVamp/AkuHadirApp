@@ -16,11 +16,11 @@ void main() async {
   final c = DevicePreview.controller;
   await c.applyPreset(DevicePresets.iPhone16e);
   await c.setOrientation(Orientation.portrait);
-  runApp(const absenduluApp());
+  runApp(const AbsenduluApp());
 }
 
-class absenduluApp extends StatelessWidget {
-  const absenduluApp({super.key});
+class AbsenduluApp extends StatelessWidget {
+  const AbsenduluApp({super.key});
 
   @override
   Widget build(BuildContext context) {

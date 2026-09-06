@@ -20,8 +20,6 @@ class AttendanceStatsModel {
     this.sudahAbsenHariIni = false,
   });
 
-  int get totalAlfa => (totalAbsen - totalMasuk - totalIzin) > 0 ? (totalAbsen - totalMasuk - totalIzin) : 0;
-
   double get attendancePercentage {
     if (totalAbsen == 0) return 0.0;
     return (totalMasuk / totalAbsen) * 100;

@@ -130,7 +130,7 @@ class AttendanceModel {
     if (isIzin) return 'izin';
     if (isLate) return 'terlambat';
     if (isCheckedIn) return 'hadir';
-    return status ?? 'alfa';
+    return status ?? 'hadir';
   }
 
   String? get effectiveCoordinates {

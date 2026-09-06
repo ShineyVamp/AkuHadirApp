@@ -26,9 +26,9 @@ class NeumorphicStatusChip extends StatelessWidget {
       bgColor = AppColors.warning.withValues(alpha: 0.15);
       label = 'Izin';
     } else {
-      textColor = AppColors.danger;
-      bgColor = AppColors.danger.withValues(alpha: 0.15);
-      label = 'Alfa';
+      textColor = AppColors.primary;
+      bgColor = AppColors.primary.withValues(alpha: 0.15);
+      label = status.isNotEmpty ? status : '-';
     }
 
     return Container(
