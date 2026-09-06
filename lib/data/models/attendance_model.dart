@@ -79,6 +79,82 @@ class AttendanceModel {
     return '--:--';
   }
 
+  bool get isCheckedIn {
+    if (checkIn != null && checkIn!.isNotEmpty) return true;
+    if (checkInTime != null && checkInTime!.isNotEmpty) return true;
+    if (effectiveCheckInTime != '--:--') return true;
+    if (status != null) {
+      final s = status!.toLowerCase();
+      if (s == 'masuk' || s == 'hadir' || s == 'terlambat' || s == 'telat' || s == 'pulang') return true;
+    }
+    if (isCheckedOut) return true;
+    return false;
+  }
+
+  bool get isCheckedOut {
+    if (checkOut != null && checkOut!.isNotEmpty) return true;
+    if (checkOutTime != null && checkOutTime!.isNotEmpty) return true;
+    if (effectiveCheckOutTime != '--:--') return true;
+    if (status != null && status!.toLowerCase() == 'pulang') return true;
+    return false;
+  }
+
+  bool get isIzin {
+    if (status != null && status!.toLowerCase() == 'izin') return true;
+    if (alasanIzin != null && alasanIzin!.isNotEmpty) return true;
+    return false;
+  }
+
+  bool get isLate {
+    if (isIzin) return false;
+    if (status != null) {
+      final s = status!.toLowerCase();
+      if (s == 'terlambat' || s == 'telat') return true;
+    }
+    final timeStr = effectiveCheckInTime;
+    if (timeStr != '--:--') {
+      try {
+        final parts = timeStr.split(':');
+        final h = int.parse(parts[0]);
+        final m = int.parse(parts[1]);
+        final s = parts.length > 2 ? int.parse(parts[2]) : 0;
+        if (h > 8 || (h == 8 && (m > 0 || s > 0))) {
+          return true;
+        }
+      } catch (_) {}
+    }
+    return false;
+  }
+
+  String get effectiveStatus {
+    if (isIzin) return 'izin';
+    if (isLate) return 'terlambat';
+    if (isCheckedIn) return 'hadir';
+    return status ?? 'alfa';
+  }
+
+  String? get effectiveCoordinates {
+    if (checkInLat != null &&
+        checkInLng != null &&
+        checkInLat.toString().trim().isNotEmpty &&
+        checkInLng.toString().trim().isNotEmpty) {
+      return '$checkInLat, $checkInLng';
+    }
+    if (checkInLocation != null && checkInLocation!.trim().isNotEmpty) {
+      return checkInLocation!.trim();
+    }
+    if (checkOutLat != null &&
+        checkOutLng != null &&
+        checkOutLat.toString().trim().isNotEmpty &&
+        checkOutLng.toString().trim().isNotEmpty) {
+      return '$checkOutLat, $checkOutLng';
+    }
+    if (checkOutLocation != null && checkOutLocation!.trim().isNotEmpty) {
+      return checkOutLocation!.trim();
+    }
+    return null;
+  }
+
   factory AttendanceModel.fromJson(Map<String, dynamic> json) => _$AttendanceModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$AttendanceModelToJson(this);

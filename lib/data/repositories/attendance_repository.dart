@@ -21,10 +21,25 @@ class AttendanceRepository {
       },
     );
 
-    if (response is Map<String, dynamic> && response.containsKey('data')) {
-      final data = response['data'];
-      if (data is Map<String, dynamic>) {
-        return AttendanceModel.fromJson(data);
+    if (response is Map<String, dynamic>) {
+      final rawData = response.containsKey('data') ? response['data'] : response;
+      if (rawData is Map<String, dynamic>) {
+        final model = AttendanceModel.fromJson(rawData);
+        if ((model.checkIn == null || model.checkIn!.isEmpty) &&
+            (model.checkInTime == null || model.checkInTime!.isEmpty)) {
+          return AttendanceModel(
+            id: model.id,
+            userId: model.userId,
+            attendanceDate: model.attendanceDate ?? date,
+            checkIn: time,
+            checkInTime: time,
+            checkInLat: model.checkInLat ?? lat,
+            checkInLng: model.checkInLng ?? lng,
+            checkInAddress: model.checkInAddress ?? address,
+            status: model.status ?? 'masuk',
+          );
+        }
+        return model;
       }
     }
     throw Exception('Gagal melakukan absen masuk');
@@ -49,10 +64,31 @@ class AttendanceRepository {
       },
     );
 
-    if (response is Map<String, dynamic> && response.containsKey('data')) {
-      final data = response['data'];
-      if (data is Map<String, dynamic>) {
-        return AttendanceModel.fromJson(data);
+    if (response is Map<String, dynamic>) {
+      final rawData = response.containsKey('data') ? response['data'] : response;
+      if (rawData is Map<String, dynamic>) {
+        final model = AttendanceModel.fromJson(rawData);
+        if ((model.checkOut == null || model.checkOut!.isEmpty) &&
+            (model.checkOutTime == null || model.checkOutTime!.isEmpty)) {
+          return AttendanceModel(
+            id: model.id,
+            userId: model.userId,
+            attendanceDate: model.attendanceDate ?? date,
+            checkIn: model.checkIn,
+            checkInTime: model.checkInTime,
+            checkOut: time,
+            checkOutTime: time,
+            checkInLat: model.checkInLat,
+            checkInLng: model.checkInLng,
+            checkOutLat: lat,
+            checkOutLng: lng,
+            checkInAddress: model.checkInAddress,
+            checkOutAddress: address,
+            status: 'pulang',
+            alasanIzin: model.alasanIzin,
+          );
+        }
+        return model;
       }
     }
     throw Exception('Gagal melakukan absen keluar');
@@ -70,10 +106,17 @@ class AttendanceRepository {
       },
     );
 
-    if (response is Map<String, dynamic> && response.containsKey('data')) {
-      final data = response['data'];
-      if (data is Map<String, dynamic>) {
-        return AttendanceModel.fromJson(data);
+    if (response is Map<String, dynamic>) {
+      final rawData = response.containsKey('data') ? response['data'] : response;
+      if (rawData is Map<String, dynamic>) {
+        final model = AttendanceModel.fromJson(rawData);
+        return AttendanceModel(
+          id: model.id,
+          userId: model.userId,
+          attendanceDate: model.attendanceDate ?? date,
+          status: 'izin',
+          alasanIzin: reason,
+        );
       }
     }
     throw Exception('Gagal mengajukan izin');
@@ -82,10 +125,20 @@ class AttendanceRepository {
   Future<AttendanceModel?> getTodayAttendance(String date) async {
     try {
       final response = await _apiClient.get('${ApiEndpoints.today}?attendance_date=$date');
-      if (response is Map<String, dynamic> && response.containsKey('data')) {
-        final data = response['data'];
-        if (data is Map<String, dynamic>) {
-          return AttendanceModel.fromJson(data);
+      if (response is Map<String, dynamic>) {
+        final rawData = response.containsKey('data') ? response['data'] : response;
+        if (rawData is Map<String, dynamic>) {
+          return AttendanceModel.fromJson(rawData);
+        } else if (rawData is List && rawData.isNotEmpty) {
+          final first = rawData.first;
+          if (first is Map<String, dynamic>) {
+            return AttendanceModel.fromJson(first);
+          }
+        }
+      } else if (response is List && response.isNotEmpty) {
+        final first = response.first;
+        if (first is Map<String, dynamic>) {
+          return AttendanceModel.fromJson(first);
         }
       }
       return null;

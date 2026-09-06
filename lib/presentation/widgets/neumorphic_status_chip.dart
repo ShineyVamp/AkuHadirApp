@@ -12,7 +12,11 @@ class NeumorphicStatusChip extends StatelessWidget {
     String label = status;
 
     final lower = status.toLowerCase();
-    if (lower == 'masuk' || lower == 'hadir') {
+    if (lower == 'terlambat' || lower == 'telat') {
+      textColor = const Color(0xFFEA580C);
+      bgColor = const Color(0xFFEA580C).withValues(alpha: 0.15);
+      label = 'Terlambat';
+    } else if (lower == 'masuk' || lower == 'hadir') {
       textColor = AppColors.success;
       bgColor = AppColors.success.withValues(alpha: 0.15);
       label = 'Hadir';

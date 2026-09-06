@@ -1,6 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:akuhadir/core/constants/app_colors.dart';import 'package:akuhadir/data/models/attendance_model.dart';import 'package:akuhadir/presentation/providers/history_provider.dart';import 'package:akuhadir/presentation/widgets/custom_snackbar.dart';import 'package:akuhadir/presentation/widgets/neumorphic_button.dart';import 'package:akuhadir/presentation/widgets/neumorphic_status_chip.dart';
+import 'package:akuhadir/core/constants/app_colors.dart';
+import 'package:akuhadir/core/utils/date_formatter.dart';
+import 'package:akuhadir/data/models/attendance_model.dart';
+import 'package:akuhadir/presentation/providers/attendance_provider.dart';
+import 'package:akuhadir/presentation/providers/history_provider.dart';
+import 'package:akuhadir/presentation/widgets/custom_snackbar.dart';
+import 'package:akuhadir/presentation/widgets/neumorphic_button.dart';
+import 'package:akuhadir/presentation/widgets/neumorphic_status_chip.dart';
+
 class HistoryDetailSheet extends StatelessWidget {
   final AttendanceModel attendance;
 
@@ -30,10 +38,19 @@ class HistoryDetailSheet extends StatelessWidget {
 
     if (confirmed == true && context.mounted) {
       final historyProv = Provider.of<HistoryProvider>(context, listen: false);
+      final attendanceProv = Provider.of<AttendanceProvider>(context, listen: false);
       if (attendance.id != null) {
         final success = await historyProv.deleteAttendance(attendance.id!);
         if (context.mounted) {
           if (success) {
+            final todayStr = DateFormatter.formatApiDate(DateTime.now());
+            if (attendanceProv.todayAttendance?.id == attendance.id ||
+                attendance.attendanceDate == todayStr) {
+              await attendanceProv.clearTodayAttendance();
+            } else {
+              await attendanceProv.loadStats();
+            }
+            if (!context.mounted) return;
             CustomSnackBar.showSuccess(context, 'Data presensi berhasil dihapus');
             Navigator.pop(context);
           } else {
@@ -83,7 +100,7 @@ class HistoryDetailSheet extends StatelessWidget {
                   color: isDark ? AppColors.textHighDark : AppColors.textHigh,
                 ),
               ),
-              NeumorphicStatusChip(status: attendance.status ?? 'masuk'),
+              NeumorphicStatusChip(status: attendance.effectiveStatus),
             ],
           ),
           const SizedBox(height: 20),
@@ -208,17 +225,17 @@ class HistoryDetailSheet extends StatelessWidget {
               children: [
                 const Row(
                   children: [
-                    Icon(Icons.location_on_outlined, size: 14, color: AppColors.primary),
+                    Icon(Icons.my_location_rounded, size: 14, color: AppColors.primary),
                     SizedBox(width: 4),
                     Text(
-                      'Alamat Lokasi Presensi',
+                      'Koordinat Lokasi Presensi',
                       style: TextStyle(fontSize: 11, color: AppColors.textMedium),
                     ),
                   ],
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  attendance.checkInAddress ?? 'PPKD Jakarta, Jl. Pemuda No. 30',
+                  attendance.effectiveCoordinates ?? 'Koordinat tidak tersedia',
                   style: TextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.w500,

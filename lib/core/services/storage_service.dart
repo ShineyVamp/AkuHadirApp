@@ -43,6 +43,26 @@ class StorageService {
     return _prefs?.getBool(_keyTheme) ?? false;
   }
 
+  static Future<void> saveTodayAttendance(String date, String jsonString) async {
+    await _prefs?.setString('today_attendance_$date', jsonString);
+  }
+
+  static String? getTodayAttendance(String date) {
+    return _prefs?.getString('today_attendance_$date');
+  }
+
+  static Future<void> clearTodayAttendance(String date) async {
+    await _prefs?.remove('today_attendance_$date');
+  }
+
+  static Future<void> saveHistory(String monthKey, String jsonString) async {
+    await _prefs?.setString('history_$monthKey', jsonString);
+  }
+
+  static String? getHistory(String monthKey) {
+    return _prefs?.getString('history_$monthKey');
+  }
+
   static Future<void> clearAll() async {
     await _prefs?.remove(_keyToken);
     await _prefs?.remove(_keyUser);

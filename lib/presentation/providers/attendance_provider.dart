@@ -1,7 +1,14 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:akuhadir/core/services/location_service.dart';import 'package:akuhadir/core/utils/date_formatter.dart';import 'package:akuhadir/data/models/attendance_model.dart';import 'package:akuhadir/data/models/attendance_stats_model.dart';import 'package:akuhadir/data/repositories/attendance_repository.dart';
+import 'package:akuhadir/core/services/location_service.dart';
+import 'package:akuhadir/core/services/storage_service.dart';
+import 'package:akuhadir/core/utils/date_formatter.dart';
+import 'package:akuhadir/data/models/attendance_model.dart';
+import 'package:akuhadir/data/models/attendance_stats_model.dart';
+import 'package:akuhadir/data/repositories/attendance_repository.dart';
+
 class AttendanceProvider extends ChangeNotifier {
   final AttendanceRepository _repository = AttendanceRepository();
 
@@ -71,10 +78,54 @@ class AttendanceProvider extends ChangeNotifier {
     }
   }
 
+  Future<void> clearTodayAttendance() async {
+    _todayAttendance = null;
+    final todayStr = DateFormatter.formatApiDate(DateTime.now());
+    await StorageService.clearTodayAttendance(todayStr);
+    await loadStats();
+    notifyListeners();
+  }
+
   Future<void> loadTodayAttendance() async {
     final todayStr = DateFormatter.formatApiDate(DateTime.now());
+    if (_todayAttendance == null) {
+      final cachedJson = StorageService.getTodayAttendance(todayStr);
+      if (cachedJson != null && cachedJson.isNotEmpty) {
+        try {
+          _todayAttendance = AttendanceModel.fromJson(jsonDecode(cachedJson));
+          notifyListeners();
+        } catch (_) {}
+      }
+    }
     try {
-      _todayAttendance = await _repository.getTodayAttendance(todayStr);
+      final fetched = await _repository.getTodayAttendance(todayStr);
+      if (fetched != null) {
+        final existingCheckIn = _todayAttendance?.checkIn;
+        final existingCheckInTime = _todayAttendance?.checkInTime;
+        final existingCheckOut = _todayAttendance?.checkOut;
+        final existingCheckOutTime = _todayAttendance?.checkOutTime;
+        _todayAttendance = AttendanceModel(
+          id: fetched.id ?? _todayAttendance?.id,
+          userId: fetched.userId ?? _todayAttendance?.userId,
+          attendanceDate: fetched.attendanceDate ?? todayStr,
+          checkIn: fetched.checkIn ?? existingCheckIn,
+          checkInTime: fetched.checkInTime ?? existingCheckInTime,
+          checkOut: fetched.checkOut ?? existingCheckOut,
+          checkOutTime: fetched.checkOutTime ?? existingCheckOutTime,
+          checkInLat: fetched.checkInLat ?? _todayAttendance?.checkInLat,
+          checkInLng: fetched.checkInLng ?? _todayAttendance?.checkInLng,
+          checkOutLat: fetched.checkOutLat ?? _todayAttendance?.checkOutLat,
+          checkOutLng: fetched.checkOutLng ?? _todayAttendance?.checkOutLng,
+          checkInAddress: fetched.checkInAddress ?? _todayAttendance?.checkInAddress,
+          checkOutAddress: fetched.checkOutAddress ?? _todayAttendance?.checkOutAddress,
+          status: fetched.status ?? _todayAttendance?.status,
+          alasanIzin: fetched.alasanIzin ?? _todayAttendance?.alasanIzin,
+        );
+        await StorageService.saveTodayAttendance(todayStr, jsonEncode(_todayAttendance!.toJson()));
+      } else {
+        _todayAttendance = null;
+        await StorageService.clearTodayAttendance(todayStr);
+      }
       notifyListeners();
     } catch (_) {}
   }
@@ -113,8 +164,14 @@ class AttendanceProvider extends ChangeNotifier {
       );
 
       _todayAttendance = res;
-      _isLoading = false;
+      await StorageService.saveTodayAttendance(dateStr, jsonEncode(res.toJson()));
+      await loadTodayAttendance();
+      if (_todayAttendance == null) {
+        _todayAttendance = res;
+        await StorageService.saveTodayAttendance(dateStr, jsonEncode(res.toJson()));
+      }
       await loadStats();
+      _isLoading = false;
       notifyListeners();
       return true;
     } catch (e) {
@@ -147,9 +204,35 @@ class AttendanceProvider extends ChangeNotifier {
         address: LocationService.ppkdAddress,
       );
 
-      _todayAttendance = res;
-      _isLoading = false;
+      final existingCheckIn = _todayAttendance?.checkIn;
+      final existingCheckInTime = _todayAttendance?.checkInTime;
+      final merged = AttendanceModel(
+        id: res.id ?? _todayAttendance?.id,
+        userId: res.userId ?? _todayAttendance?.userId,
+        attendanceDate: res.attendanceDate ?? dateStr,
+        checkIn: res.checkIn ?? existingCheckIn,
+        checkInTime: res.checkInTime ?? existingCheckInTime,
+        checkOut: res.checkOut ?? timeStr,
+        checkOutTime: res.checkOutTime ?? timeStr,
+        checkInLat: res.checkInLat ?? _todayAttendance?.checkInLat,
+        checkInLng: res.checkInLng ?? _todayAttendance?.checkInLng,
+        checkOutLat: lat,
+        checkOutLng: lng,
+        checkInAddress: res.checkInAddress ?? _todayAttendance?.checkInAddress,
+        checkOutAddress: LocationService.ppkdAddress,
+        status: 'pulang',
+        alasanIzin: res.alasanIzin ?? _todayAttendance?.alasanIzin,
+      );
+
+      _todayAttendance = merged;
+      await StorageService.saveTodayAttendance(dateStr, jsonEncode(merged.toJson()));
+      await loadTodayAttendance();
+      if (_todayAttendance == null) {
+        _todayAttendance = merged;
+        await StorageService.saveTodayAttendance(dateStr, jsonEncode(merged.toJson()));
+      }
       await loadStats();
+      _isLoading = false;
       notifyListeners();
       return true;
     } catch (e) {
@@ -175,6 +258,7 @@ class AttendanceProvider extends ChangeNotifier {
       );
 
       _todayAttendance = res;
+      await StorageService.saveTodayAttendance(dateStr, jsonEncode(res.toJson()));
       _isLoading = false;
       await loadStats();
       notifyListeners();

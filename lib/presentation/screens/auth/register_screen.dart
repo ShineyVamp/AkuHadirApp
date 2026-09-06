@@ -1,6 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:akuhadir/core/constants/app_colors.dart';import 'package:akuhadir/core/theme/neumorphic_decorations.dart';import 'package:akuhadir/data/models/batch_model.dart';import 'package:akuhadir/data/models/training_model.dart';import 'package:akuhadir/data/repositories/master_repository.dart';import 'package:akuhadir/presentation/screens/main/main_screen.dart';import 'package:akuhadir/presentation/providers/auth_provider.dart';import 'package:akuhadir/presentation/widgets/custom_snackbar.dart';import 'package:akuhadir/presentation/widgets/neumorphic_button.dart';import 'package:akuhadir/presentation/widgets/neumorphic_text_field.dart';
+import 'package:akuhadir/core/constants/app_colors.dart';
+import 'package:akuhadir/core/theme/neumorphic_decorations.dart';
+import 'package:akuhadir/data/models/batch_model.dart';
+import 'package:akuhadir/data/models/training_model.dart';
+import 'package:akuhadir/data/repositories/master_repository.dart';
+import 'package:akuhadir/presentation/screens/main/main_screen.dart';
+import 'package:akuhadir/presentation/providers/auth_provider.dart';
+import 'package:akuhadir/presentation/widgets/custom_snackbar.dart';
+import 'package:akuhadir/presentation/widgets/neumorphic_button.dart';
+import 'package:akuhadir/presentation/widgets/neumorphic_text_field.dart';
+
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
 
@@ -15,7 +25,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
 
   String _gender = 'L';
   BatchModel? _selectedBatch;
@@ -26,7 +37,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   bool _isLoadingMaster = true;
   bool _obscurePassword = true;
   bool _obscureConfirm = true;
-  bool _agreeTerms = true;
+  bool _agreeTerms = false;
 
   @override
   void initState() {
@@ -53,7 +64,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
           _trainings = trainings;
           if (_batches.isNotEmpty) {
             _selectedBatch = _batches.first;
-            if (_selectedBatch?.trainings != null && _selectedBatch!.trainings!.isNotEmpty) {
+            if (_selectedBatch?.trainings != null &&
+                _selectedBatch!.trainings!.isNotEmpty) {
               _selectedTraining = _selectedBatch!.trainings!.first;
             }
           }
@@ -74,7 +86,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
     if (!_formKey.currentState!.validate()) return;
 
     if (!_agreeTerms) {
-      CustomSnackBar.showError(context, 'Setujui syarat dan ketentuan untuk mendaftar');
+      CustomSnackBar.showError(
+        context,
+        'Setujui syarat dan ketentuan untuk mendaftar',
+      );
       return;
     }
 
@@ -96,14 +111,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
     if (!mounted) return;
 
     if (success) {
-      CustomSnackBar.showSuccess(context, 'Registrasi berhasil! Selamat datang');
+      CustomSnackBar.showSuccess(
+        context,
+        'Registrasi berhasil! Selamat datang',
+      );
       Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: (_) => const MainScreen()),
         (route) => false,
       );
     } else {
-      CustomSnackBar.showError(context, auth.errorMessage ?? 'Gagal melakukan registrasi');
+      CustomSnackBar.showError(
+        context,
+        auth.errorMessage ?? 'Gagal melakukan registrasi',
+      );
     }
   }
 
@@ -126,7 +147,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 child: CircularProgressIndicator(color: AppColors.primary),
               )
             : SingleChildScrollView(
-                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 24,
+                  vertical: 16,
+                ),
                 child: Form(
                   key: _formKey,
                   child: Column(
@@ -137,7 +161,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.w700,
-                          color: isDark ? AppColors.textHighDark : AppColors.textHigh,
+                          color: isDark
+                              ? AppColors.textHighDark
+                              : AppColors.textHigh,
                         ),
                       ),
                       const SizedBox(height: 4),
@@ -145,7 +171,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         'Daftarkan diri Anda sebagai siswa pelatihan resmi PPKD',
                         style: TextStyle(
                           fontSize: 13,
-                          color: isDark ? AppColors.textMediumDark : AppColors.textMedium,
+                          color: isDark
+                              ? AppColors.textMediumDark
+                              : AppColors.textMedium,
                         ),
                       ),
                       const SizedBox(height: 24),
@@ -153,8 +181,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         controller: _nameController,
                         labelText: 'Nama Lengkap Siswa',
                         hintText: 'cth. Ahmad Fauzi',
-                        prefixIcon: const Icon(Icons.person_outline_rounded, size: 18, color: AppColors.primary),
-                        validator: (val) => (val == null || val.trim().isEmpty) ? 'Nama lengkap wajib diisi' : null,
+                        prefixIcon: const Icon(
+                          Icons.person_outline_rounded,
+                          size: 18,
+                          color: AppColors.primary,
+                        ),
+                        validator: (val) => (val == null || val.trim().isEmpty)
+                            ? 'Nama lengkap wajib diisi'
+                            : null,
                       ),
                       const SizedBox(height: 16),
                       NeumorphicTextField(
@@ -162,10 +196,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         labelText: 'Email Resmi Siswa',
                         hintText: 'nama@siswa.ppkd.id',
                         keyboardType: TextInputType.emailAddress,
-                        prefixIcon: const Icon(Icons.email_outlined, size: 18, color: AppColors.primary),
+                        prefixIcon: const Icon(
+                          Icons.email_outlined,
+                          size: 18,
+                          color: AppColors.primary,
+                        ),
                         validator: (val) {
-                          if (val == null || val.trim().isEmpty) return 'Email wajib diisi';
-                          if (!val.contains('@')) return 'Format email tidak valid';
+                          if (val == null || val.trim().isEmpty) {
+                            return 'Email wajib diisi';
+                          }
+                          if (!val.contains('@')) {
+                            return 'Format email tidak valid';
+                          }
                           return null;
                         },
                       ),
@@ -175,7 +217,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         style: TextStyle(
                           fontSize: 13,
                           fontWeight: FontWeight.w600,
-                          color: isDark ? AppColors.textMediumDark : AppColors.textMedium,
+                          color: isDark
+                              ? AppColors.textMediumDark
+                              : AppColors.textMedium,
                         ),
                       ),
                       const SizedBox(height: 8),
@@ -185,7 +229,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             child: GestureDetector(
                               onTap: () => setState(() => _gender = 'L'),
                               child: Container(
-                                padding: const EdgeInsets.symmetric(vertical: 12),
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 12,
+                                ),
                                 decoration: _gender == 'L'
                                     ? NeumorphicDecorations.primaryPill(
                                         color: AppColors.primary,
@@ -203,7 +249,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     fontWeight: FontWeight.w600,
                                     color: _gender == 'L'
                                         ? Colors.white
-                                        : (isDark ? AppColors.textHighDark : AppColors.textHigh),
+                                        : (isDark
+                                              ? AppColors.textHighDark
+                                              : AppColors.textHigh),
                                   ),
                                 ),
                               ),
@@ -214,7 +262,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             child: GestureDetector(
                               onTap: () => setState(() => _gender = 'P'),
                               child: Container(
-                                padding: const EdgeInsets.symmetric(vertical: 12),
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 12,
+                                ),
                                 decoration: _gender == 'P'
                                     ? NeumorphicDecorations.primaryPill(
                                         color: AppColors.primary,
@@ -232,7 +282,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     fontWeight: FontWeight.w600,
                                     color: _gender == 'P'
                                         ? Colors.white
-                                        : (isDark ? AppColors.textHighDark : AppColors.textHigh),
+                                        : (isDark
+                                              ? AppColors.textHighDark
+                                              : AppColors.textHigh),
                                   ),
                                 ),
                               ),
@@ -246,7 +298,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         style: TextStyle(
                           fontSize: 13,
                           fontWeight: FontWeight.w600,
-                          color: isDark ? AppColors.textMediumDark : AppColors.textMedium,
+                          color: isDark
+                              ? AppColors.textMediumDark
+                              : AppColors.textMedium,
                         ),
                       ),
                       const SizedBox(height: 8),
@@ -260,8 +314,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           child: DropdownButton<BatchModel>(
                             isExpanded: true,
                             value: _selectedBatch,
-                            dropdownColor: isDark ? AppColors.cardBgDark : AppColors.cardBg,
-                            icon: const Icon(Icons.keyboard_arrow_down_rounded, color: AppColors.primary),
+                            dropdownColor: isDark
+                                ? AppColors.cardBgDark
+                                : AppColors.cardBg,
+                            icon: const Icon(
+                              Icons.keyboard_arrow_down_rounded,
+                              color: AppColors.primary,
+                            ),
                             items: _batches.map((b) {
                               return DropdownMenuItem<BatchModel>(
                                 value: b,
@@ -269,7 +328,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   '${b.displayName} (${b.startDate ?? ''})',
                                   style: TextStyle(
                                     fontSize: 14,
-                                    color: isDark ? AppColors.textHighDark : AppColors.textHigh,
+                                    color: isDark
+                                        ? AppColors.textHighDark
+                                        : AppColors.textHigh,
                                   ),
                                 ),
                               );
@@ -277,7 +338,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             onChanged: (val) {
                               setState(() {
                                 _selectedBatch = val;
-                                if (val?.trainings != null && val!.trainings!.isNotEmpty) {
+                                if (val?.trainings != null &&
+                                    val!.trainings!.isNotEmpty) {
                                   _selectedTraining = val.trainings!.first;
                                 }
                               });
@@ -291,7 +353,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         style: TextStyle(
                           fontSize: 13,
                           fontWeight: FontWeight.w600,
-                          color: isDark ? AppColors.textMediumDark : AppColors.textMedium,
+                          color: isDark
+                              ? AppColors.textMediumDark
+                              : AppColors.textMedium,
                         ),
                       ),
                       const SizedBox(height: 8),
@@ -305,25 +369,38 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           child: DropdownButton<TrainingModel>(
                             isExpanded: true,
                             value: _selectedTraining,
-                            dropdownColor: isDark ? AppColors.cardBgDark : AppColors.cardBg,
-                            icon: const Icon(Icons.keyboard_arrow_down_rounded, color: AppColors.primary),
-                            items: (_selectedBatch?.trainings != null && _selectedBatch!.trainings!.isNotEmpty
-                                    ? _selectedBatch!.trainings!
-                                    : _trainings)
-                                .map((t) {
-                              return DropdownMenuItem<TrainingModel>(
-                                value: t,
-                                child: Text(
-                                  t.title,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    color: isDark ? AppColors.textHighDark : AppColors.textHigh,
-                                  ),
-                                ),
-                              );
-                            }).toList(),
-                            onChanged: (val) => setState(() => _selectedTraining = val),
+                            dropdownColor: isDark
+                                ? AppColors.cardBgDark
+                                : AppColors.cardBg,
+                            icon: const Icon(
+                              Icons.keyboard_arrow_down_rounded,
+                              color: AppColors.primary,
+                            ),
+                            items:
+                                (_selectedBatch?.trainings != null &&
+                                            _selectedBatch!
+                                                .trainings!
+                                                .isNotEmpty
+                                        ? _selectedBatch!.trainings!
+                                        : _trainings)
+                                    .map((t) {
+                                      return DropdownMenuItem<TrainingModel>(
+                                        value: t,
+                                        child: Text(
+                                          t.title,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            color: isDark
+                                                ? AppColors.textHighDark
+                                                : AppColors.textHigh,
+                                          ),
+                                        ),
+                                      );
+                                    })
+                                    .toList(),
+                            onChanged: (val) =>
+                                setState(() => _selectedTraining = val),
                           ),
                         ),
                       ),
@@ -333,17 +410,31 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         labelText: 'Password',
                         hintText: 'Minimal 8 karakter',
                         obscureText: _obscurePassword,
-                        prefixIcon: const Icon(Icons.lock_outline_rounded, size: 18, color: AppColors.primary),
+                        prefixIcon: const Icon(
+                          Icons.lock_outline_rounded,
+                          size: 18,
+                          color: AppColors.primary,
+                        ),
                         suffixIcon: IconButton(
-                          onPressed: () => setState(() => _obscurePassword = !_obscurePassword),
+                          padding: EdgeInsets.zero,
+                          constraints: const BoxConstraints(),
+                          onPressed: () => setState(
+                            () => _obscurePassword = !_obscurePassword,
+                          ),
                           icon: Icon(
-                            _obscurePassword ? Icons.visibility_off_outlined : Icons.visibility_outlined,
+                            _obscurePassword
+                                ? Icons.visibility_off_outlined
+                                : Icons.visibility_outlined,
                             size: 18,
-                            color: isDark ? AppColors.textLowDark : AppColors.textLow,
+                            color: isDark
+                                ? AppColors.textLowDark
+                                : AppColors.textLow,
                           ),
                         ),
                         validator: (val) {
-                          if (val == null || val.length < 8) return 'Password minimal 8 karakter';
+                          if (val == null || val.length < 8) {
+                            return 'Password minimal 8 karakter';
+                          }
                           return null;
                         },
                       ),
@@ -353,17 +444,31 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         labelText: 'Konfirmasi Password',
                         hintText: 'Ulangi password',
                         obscureText: _obscureConfirm,
-                        prefixIcon: const Icon(Icons.lock_outline_rounded, size: 18, color: AppColors.primary),
+                        prefixIcon: const Icon(
+                          Icons.lock_outline_rounded,
+                          size: 18,
+                          color: AppColors.primary,
+                        ),
                         suffixIcon: IconButton(
-                          onPressed: () => setState(() => _obscureConfirm = !_obscureConfirm),
+                          padding: EdgeInsets.zero,
+                          constraints: const BoxConstraints(),
+                          onPressed: () => setState(
+                            () => _obscureConfirm = !_obscureConfirm,
+                          ),
                           icon: Icon(
-                            _obscureConfirm ? Icons.visibility_off_outlined : Icons.visibility_outlined,
+                            _obscureConfirm
+                                ? Icons.visibility_off_outlined
+                                : Icons.visibility_outlined,
                             size: 18,
-                            color: isDark ? AppColors.textLowDark : AppColors.textLow,
+                            color: isDark
+                                ? AppColors.textLowDark
+                                : AppColors.textLow,
                           ),
                         ),
                         validator: (val) {
-                          if (val != _passwordController.text) return 'Konfirmasi password tidak cocok';
+                          if (val != _passwordController.text) {
+                            return 'Konfirmasi password tidak cocok';
+                          }
                           return null;
                         },
                       ),
@@ -373,15 +478,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           Checkbox(
                             value: _agreeTerms,
                             activeColor: AppColors.primary,
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-                            onChanged: (val) => setState(() => _agreeTerms = val ?? false),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(4),
+                            ),
+                            onChanged: (val) =>
+                                setState(() => _agreeTerms = val ?? false),
                           ),
                           Expanded(
                             child: Text(
                               'Saya menyetujui seluruh ketentuan dan tata tertib presensi PPKD Jakarta',
                               style: TextStyle(
                                 fontSize: 12,
-                                color: isDark ? AppColors.textMediumDark : AppColors.textMedium,
+                                color: isDark
+                                    ? AppColors.textMediumDark
+                                    : AppColors.textMedium,
                               ),
                             ),
                           ),
@@ -404,8 +514,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 color: Colors.white,
                               ),
                             ),
-                            SizedBox(width: 8),
-                            Icon(Icons.how_to_reg_rounded, size: 20, color: Colors.white),
                           ],
                         ),
                       ),

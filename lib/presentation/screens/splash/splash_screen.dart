@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:akuhadir/core/constants/app_colors.dart';import 'package:akuhadir/core/services/storage_service.dart';import 'package:akuhadir/core/theme/neumorphic_decorations.dart';import 'package:akuhadir/presentation/screens/auth/login_screen.dart';import 'package:akuhadir/presentation/screens/main/main_screen.dart';
+import 'package:akuhadir/core/constants/app_colors.dart';
+import 'package:akuhadir/core/services/storage_service.dart';
+import 'package:akuhadir/core/theme/neumorphic_decorations.dart';
+import 'package:akuhadir/presentation/screens/auth/login_screen.dart';
+import 'package:akuhadir/presentation/screens/main/main_screen.dart';
+
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
@@ -42,19 +47,14 @@ class _SplashScreenState extends State<SplashScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              width: 100,
-              height: 100,
+              width: 104,
+              height: 104,
+              padding: const EdgeInsets.all(14),
               decoration: NeumorphicDecorations.extruded(
                 isDark: isDark,
                 borderRadius: 28,
               ),
-              child: const Center(
-                child: Icon(
-                  Icons.fingerprint_rounded,
-                  size: 56,
-                  color: AppColors.primary,
-                ),
-              ),
+              child: Image.asset('assets/icons/icon.png', fit: BoxFit.contain),
             ),
             const SizedBox(height: 24),
             Text(

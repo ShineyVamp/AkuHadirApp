@@ -1,6 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:akuhadir/core/constants/app_colors.dart';import 'package:akuhadir/core/theme/neumorphic_decorations.dart';import 'package:akuhadir/presentation/screens/main/main_screen.dart';import 'package:akuhadir/presentation/providers/auth_provider.dart';import 'package:akuhadir/presentation/widgets/custom_snackbar.dart';import 'package:akuhadir/presentation/widgets/neumorphic_button.dart';import 'package:akuhadir/presentation/widgets/neumorphic_text_field.dart';import 'package:akuhadir/presentation/screens/auth/forgot_password_dialog.dart';import 'package:akuhadir/presentation/screens/auth/register_screen.dart';
+import 'package:akuhadir/core/constants/app_colors.dart';
+import 'package:akuhadir/core/theme/neumorphic_decorations.dart';
+import 'package:akuhadir/presentation/screens/main/main_screen.dart';
+import 'package:akuhadir/presentation/providers/auth_provider.dart';
+import 'package:akuhadir/presentation/widgets/custom_snackbar.dart';
+import 'package:akuhadir/presentation/widgets/neumorphic_button.dart';
+import 'package:akuhadir/presentation/widgets/neumorphic_text_field.dart';
+import 'package:akuhadir/presentation/screens/auth/forgot_password_dialog.dart';
+import 'package:akuhadir/presentation/screens/auth/register_screen.dart';
+
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
@@ -38,7 +47,10 @@ class _LoginScreenState extends State<LoginScreen> {
         MaterialPageRoute(builder: (_) => const MainScreen()),
       );
     } else {
-      CustomSnackBar.showError(context, auth.errorMessage ?? 'Email atau password salah');
+      CustomSnackBar.showError(
+        context,
+        auth.errorMessage ?? 'Email atau password salah',
+      );
     }
   }
 
@@ -60,45 +72,53 @@ class _LoginScreenState extends State<LoginScreen> {
                 children: [
                   Center(
                     child: Container(
-                      width: 84,
-                      height: 84,
+                      width: 88,
+                      height: 88,
+                      padding: const EdgeInsets.all(12),
                       decoration: NeumorphicDecorations.extruded(
                         isDark: isDark,
                         borderRadius: 24,
                       ),
-                      child: const Icon(
-                        Icons.fingerprint_rounded,
-                        size: 48,
-                        color: AppColors.primary,
+                      child: Image.asset(
+                        'assets/icons/icon.png',
+                        fit: BoxFit.contain,
                       ),
                     ),
                   ),
-                  const SizedBox(height: 28),
+                  const SizedBox(height: 16),
                   Text(
                     'Masuk Akun',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.w700,
-                      color: isDark ? AppColors.textHighDark : AppColors.textHigh,
+                      color: isDark
+                          ? AppColors.textHighDark
+                          : AppColors.textHigh,
                     ),
                   ),
                   const SizedBox(height: 6),
                   Text(
-                    'Presensi Mandiri Siswa PPKD Jakarta',
+                    'Aplikasi Presensi Siswa PPKD Jakarta',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 14,
-                      color: isDark ? AppColors.textMediumDark : AppColors.textMedium,
+                      color: isDark
+                          ? AppColors.textMediumDark
+                          : AppColors.textMedium,
                     ),
                   ),
                   const SizedBox(height: 36),
                   NeumorphicTextField(
                     controller: _emailController,
                     labelText: 'Email Siswa',
-                    hintText: 'nama@siswa.ppkd.id',
+                    hintText: 'email@gmail.com',
                     keyboardType: TextInputType.emailAddress,
-                    prefixIcon: const Icon(Icons.email_outlined, size: 18, color: AppColors.primary),
+                    prefixIcon: const Icon(
+                      Icons.email_outlined,
+                      size: 18,
+                      color: AppColors.primary,
+                    ),
                     validator: (val) {
                       if (val == null || val.trim().isEmpty) {
                         return 'Email wajib diisi';
@@ -115,13 +135,24 @@ class _LoginScreenState extends State<LoginScreen> {
                     labelText: 'Password',
                     hintText: '••••••••',
                     obscureText: _obscurePassword,
-                    prefixIcon: const Icon(Icons.lock_outline_rounded, size: 18, color: AppColors.primary),
+                    prefixIcon: const Icon(
+                      Icons.lock_outline_rounded,
+                      size: 18,
+                      color: AppColors.primary,
+                    ),
                     suffixIcon: IconButton(
-                      onPressed: () => setState(() => _obscurePassword = !_obscurePassword),
+                      padding: EdgeInsets.zero,
+                      constraints: const BoxConstraints(),
+                      onPressed: () =>
+                          setState(() => _obscurePassword = !_obscurePassword),
                       icon: Icon(
-                        _obscurePassword ? Icons.visibility_off_outlined : Icons.visibility_outlined,
+                        _obscurePassword
+                            ? Icons.visibility_off_outlined
+                            : Icons.visibility_outlined,
                         size: 18,
-                        color: isDark ? AppColors.textLowDark : AppColors.textLow,
+                        color: isDark
+                            ? AppColors.textLowDark
+                            : AppColors.textLow,
                       ),
                     ),
                     validator: (val) {
@@ -168,8 +199,6 @@ class _LoginScreenState extends State<LoginScreen> {
                             color: Colors.white,
                           ),
                         ),
-                        SizedBox(width: 8),
-                        Icon(Icons.arrow_forward_rounded, size: 20, color: Colors.white),
                       ],
                     ),
                   ),
@@ -181,14 +210,18 @@ class _LoginScreenState extends State<LoginScreen> {
                         'Belum memiliki akun? ',
                         style: TextStyle(
                           fontSize: 14,
-                          color: isDark ? AppColors.textMediumDark : AppColors.textMedium,
+                          color: isDark
+                              ? AppColors.textMediumDark
+                              : AppColors.textMedium,
                         ),
                       ),
                       GestureDetector(
                         onTap: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (_) => const RegisterScreen()),
+                            MaterialPageRoute(
+                              builder: (_) => const RegisterScreen(),
+                            ),
                           );
                         },
                         child: const Text(

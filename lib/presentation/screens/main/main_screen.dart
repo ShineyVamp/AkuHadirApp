@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:akuhadir/core/constants/app_colors.dart';import 'package:akuhadir/core/theme/neumorphic_decorations.dart';import 'package:akuhadir/presentation/screens/dashboard/dashboard_screen.dart';import 'package:akuhadir/presentation/screens/history/history_screen.dart';import 'package:akuhadir/presentation/screens/profile/profile_screen.dart';import 'package:akuhadir/presentation/providers/auth_provider.dart';
+import 'package:akuhadir/presentation/screens/dashboard/dashboard_screen.dart';
+import 'package:akuhadir/presentation/screens/history/history_screen.dart';
+import 'package:akuhadir/presentation/screens/profile/profile_screen.dart';
+import 'package:akuhadir/presentation/providers/auth_provider.dart';
+import 'package:akuhadir/presentation/providers/history_provider.dart';
+
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
 
@@ -25,49 +30,38 @@ class _MainScreenState extends State<MainScreen> {
     });
   }
 
-  Widget _buildNavItem({
-    required int index,
-    required IconData icon,
-    required String label,
-    required bool isDark,
-  }) {
+  Widget _buildNavItem(int index, IconData icon, String label, bool isDark) {
     final isSelected = _currentIndex == index;
+    final unselectedColor = isDark
+        ? const Color(0xFF94A3B8)
+        : const Color(0xFF334155);
 
     return Expanded(
-      child: InkWell(
-        onTap: () => setState(() => _currentIndex = index),
-        borderRadius: BorderRadius.circular(16),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
+      child: GestureDetector(
+        onTap: () {
+          setState(() => _currentIndex = index);
+          if (index == 1) {
+            Provider.of<HistoryProvider>(context, listen: false).refreshHistory();
+          }
+        },
+        behavior: HitTestBehavior.opaque,
+        child: Container(
+          padding: const EdgeInsets.symmetric(vertical: 10),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              AnimatedContainer(
-                duration: const Duration(milliseconds: 200),
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-                decoration: isSelected
-                    ? BoxDecoration(
-                        color: AppColors.primary.withValues(alpha: 0.15),
-                        borderRadius: BorderRadius.circular(16),
-                      )
-                    : null,
-                child: Icon(
-                  icon,
-                  size: 22,
-                  color: isSelected
-                      ? AppColors.primary
-                      : (isDark ? AppColors.textLowDark : AppColors.textLow),
-                ),
+              Icon(
+                icon,
+                size: 20,
+                color: isSelected ? Colors.white : unselectedColor,
               ),
-              const SizedBox(height: 2),
+              const SizedBox(width: 6),
               Text(
                 label,
                 style: TextStyle(
-                  fontSize: 11,
-                  fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
-                  color: isSelected
-                      ? AppColors.primary
-                      : (isDark ? AppColors.textLowDark : AppColors.textLow),
+                  fontSize: 13,
+                  fontWeight: isSelected ? FontWeight.w700 : FontWeight.w600,
+                  color: isSelected ? Colors.white : unselectedColor,
                 ),
               ),
             ],
@@ -82,39 +76,99 @@ class _MainScreenState extends State<MainScreen> {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(
-      body: IndexedStack(
-        index: _currentIndex,
-        children: _screens,
-      ),
-      bottomNavigationBar: Container(
-        decoration: NeumorphicDecorations.navDock(isDark: isDark),
-        padding: const EdgeInsets.only(top: 6, bottom: 8),
-        child: SafeArea(
-          top: false,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              _buildNavItem(
-                index: 0,
-                icon: Icons.home_rounded,
-                label: 'Beranda',
-                isDark: isDark,
+      body: Stack(
+        children: [
+          IndexedStack(index: _currentIndex, children: _screens),
+          Positioned(
+            left: 0,
+            right: 0,
+            bottom: 0,
+            child: SafeArea(
+              top: false,
+              child: Center(
+                heightFactor: 1.0,
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: 800),
+                  child: Container(
+                    margin: const EdgeInsets.only(left: 18, right: 18, bottom: 12),
+                    padding: const EdgeInsets.all(4),
+                    decoration: BoxDecoration(
+                      color: isDark ? const Color(0xFF1B2230) : Colors.white,
+                      borderRadius: BorderRadius.circular(36),
+                      boxShadow: [
+                        BoxShadow(
+                          color: isDark
+                              ? Colors.black.withValues(alpha: 0.35)
+                              : const Color(0xFF64748B).withValues(alpha: 0.12),
+                          blurRadius: 18,
+                          offset: const Offset(0, 4),
+                        ),
+                      ],
+                    ),
+                    child: LayoutBuilder(
+                      builder: (context, constraints) {
+                        final totalWidth = constraints.maxWidth;
+                        final itemWidth = totalWidth / 3;
+
+                        return Stack(
+                          alignment: Alignment.centerLeft,
+                          children: [
+                            AnimatedPositioned(
+                              duration: const Duration(milliseconds: 300),
+                              curve: Curves.easeInOutCubic,
+                              left: _currentIndex * itemWidth,
+                              top: 2,
+                              bottom: 2,
+                              width: itemWidth,
+                              child: Container(
+                                margin: const EdgeInsets.symmetric(horizontal: 4),
+                                decoration: BoxDecoration(
+                                  color: const Color(0xFF2C54D8),
+                                  borderRadius: BorderRadius.circular(26),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: const Color(
+                                        0xFF2C54D8,
+                                      ).withValues(alpha: 0.35),
+                                      blurRadius: 10,
+                                      offset: const Offset(0, 3),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Row(
+                              children: [
+                                _buildNavItem(
+                                  0,
+                                  Icons.home_rounded,
+                                  'Beranda',
+                                  isDark,
+                                ),
+                                _buildNavItem(
+                                  1,
+                                  Icons.history_rounded,
+                                  'Riwayat',
+                                  isDark,
+                                ),
+                                _buildNavItem(
+                                  2,
+                                  Icons.person_outline_rounded,
+                                  'Profil',
+                                  isDark,
+                                ),
+                              ],
+                            ),
+                          ],
+                        );
+                      },
+                    ),
+                  ),
+                ),
               ),
-              _buildNavItem(
-                index: 1,
-                icon: Icons.history_rounded,
-                label: 'Riwayat',
-                isDark: isDark,
-              ),
-              _buildNavItem(
-                index: 2,
-                icon: Icons.person_rounded,
-                label: 'Profil',
-                isDark: isDark,
-              ),
-            ],
+            ),
           ),
-        ),
+        ],
       ),
     );
   }
