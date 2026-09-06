@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:absendulu/core/constants/app_colors.dart';
 import 'package:absendulu/core/services/storage_service.dart';
 import 'package:absendulu/core/theme/neumorphic_decorations.dart';
+import 'package:absendulu/extensions/navigation.dart';
 import 'package:absendulu/presentation/screens/auth/login_screen.dart';
 import 'package:absendulu/presentation/screens/main/main_screen.dart';
 
@@ -25,15 +26,9 @@ class _SplashScreenState extends State<SplashScreen> {
 
     final token = StorageService.getToken();
     if (token != null && token.isNotEmpty) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (_) => const MainScreen()),
-      );
+      context.pushReplacement(const MainScreen());
     } else {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (_) => const LoginScreen()),
-      );
+      context.pushReplacement(const LoginScreen());
     }
   }
 

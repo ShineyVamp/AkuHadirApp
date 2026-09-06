@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:absendulu/core/constants/app_colors.dart';
 import 'package:absendulu/core/theme/neumorphic_decorations.dart';
+import 'package:absendulu/extensions/navigation.dart';
 import 'package:absendulu/presentation/screens/main/main_screen.dart';
 import 'package:absendulu/presentation/providers/auth_provider.dart';
 import 'package:absendulu/presentation/widgets/custom_snackbar.dart';
@@ -42,10 +43,7 @@ class _LoginScreenState extends State<LoginScreen> {
     if (!mounted) return;
 
     if (success) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (_) => const MainScreen()),
-      );
+      context.pushReplacement(const MainScreen());
     } else {
       CustomSnackBar.showError(
         context,
@@ -217,12 +215,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       GestureDetector(
                         onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (_) => const RegisterScreen(),
-                            ),
-                          );
+                          context.push(const RegisterScreen());
                         },
                         child: const Text(
                           'Daftar Sekarang',

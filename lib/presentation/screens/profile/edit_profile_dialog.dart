@@ -3,6 +3,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:absendulu/core/constants/app_colors.dart';
 import 'package:absendulu/core/utils/image_helper.dart';
+import 'package:absendulu/extensions/navigation.dart';
 import 'package:absendulu/presentation/providers/auth_provider.dart';
 import 'package:absendulu/presentation/widgets/custom_snackbar.dart';
 import 'package:absendulu/presentation/widgets/neumorphic_button.dart';
@@ -45,7 +46,7 @@ class _EditProfileDialogState extends State<EditProfileDialog> {
 
     if (success) {
       CustomSnackBar.showSuccess(context, 'Profil berhasil diperbarui');
-      Navigator.pop(context);
+      context.pop();
     } else {
       CustomSnackBar.showError(
         context,
@@ -106,7 +107,7 @@ class _EditProfileDialogState extends State<EditProfileDialog> {
                     ),
                   ),
                   IconButton(
-                    onPressed: () => Navigator.pop(context),
+                    onPressed: () => context.pop(),
                     icon: const Icon(Icons.close_rounded, size: 20),
                   ),
                 ],

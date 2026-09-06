@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:absendulu/core/constants/app_colors.dart';
 import 'package:absendulu/core/theme/neumorphic_decorations.dart';
+import 'package:absendulu/extensions/navigation.dart';
 import 'package:absendulu/presentation/screens/auth/login_screen.dart';
 import 'package:absendulu/presentation/providers/auth_provider.dart';
 import 'package:absendulu/presentation/providers/theme_provider.dart';
@@ -356,14 +357,14 @@ class ProfileScreen extends StatelessWidget {
                       ),
                       actions: [
                         TextButton(
-                          onPressed: () => Navigator.pop(dCtx, false),
+                          onPressed: () => dCtx.pop(false),
                           child: const Text('Batal'),
                         ),
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             backgroundColor: AppColors.danger,
                           ),
-                          onPressed: () => Navigator.pop(dCtx, true),
+                          onPressed: () => dCtx.pop(true),
                           child: const Text(
                             'Keluar',
                             style: TextStyle(color: Colors.white),
@@ -376,11 +377,7 @@ class ProfileScreen extends StatelessWidget {
                   if (confirmed == true && context.mounted) {
                     await auth.logout();
                     if (context.mounted) {
-                      Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(builder: (_) => const LoginScreen()),
-                        (route) => false,
-                      );
+                      context.pushAndRemoveAll(const LoginScreen());
                     }
                   }
                 },

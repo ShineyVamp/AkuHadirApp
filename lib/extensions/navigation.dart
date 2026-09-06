@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 extension ExtendedNavigator on BuildContext {
-  Future<dynamic> push(Widget page, {String? name}) async {
-    return Navigator.push(
+  Future<T?> push<T extends Object?>(Widget page, {String? name}) async {
+    return Navigator.push<T>(
       this,
       MaterialPageRoute(
         builder: (_) => page,
@@ -11,18 +11,23 @@ extension ExtendedNavigator on BuildContext {
     );
   }
 
-  Future<dynamic> pushReplacement(Widget page, {String? name}) async {
-    return Navigator.pushReplacement(
+  Future<T?> pushReplacement<T extends Object?, TO extends Object?>(
+    Widget page, {
+    String? name,
+    TO? result,
+  }) async {
+    return Navigator.pushReplacement<T, TO>(
       this,
       MaterialPageRoute(
         builder: (_) => page,
         settings: RouteSettings(name: name ?? page.runtimeType.toString()),
       ),
+      result: result,
     );
   }
 
-  Future<dynamic> pushAndRemoveAll(Widget page, {String? name}) async {
-    return Navigator.pushAndRemoveUntil(
+  Future<T?> pushAndRemoveAll<T extends Object?>(Widget page, {String? name}) async {
+    return Navigator.pushAndRemoveUntil<T>(
       this,
       MaterialPageRoute(
         builder: (_) => page,
@@ -33,6 +38,6 @@ extension ExtendedNavigator on BuildContext {
   }
 
   void pop<T extends Object?>([T? result]) {
-    Navigator.of(this).pop(result);
+    Navigator.of(this).pop<T>(result);
   }
 }

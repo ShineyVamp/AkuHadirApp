@@ -5,6 +5,7 @@ import 'package:absendulu/core/theme/neumorphic_decorations.dart';
 import 'package:absendulu/data/models/batch_model.dart';
 import 'package:absendulu/data/models/training_model.dart';
 import 'package:absendulu/data/repositories/master_repository.dart';
+import 'package:absendulu/extensions/navigation.dart';
 import 'package:absendulu/presentation/screens/main/main_screen.dart';
 import 'package:absendulu/presentation/providers/auth_provider.dart';
 import 'package:absendulu/presentation/widgets/custom_snackbar.dart';
@@ -115,11 +116,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         context,
         'Registrasi berhasil! Selamat datang',
       );
-      Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(builder: (_) => const MainScreen()),
-        (route) => false,
-      );
+      context.pushAndRemoveAll(const MainScreen());
     } else {
       CustomSnackBar.showError(
         context,
@@ -138,7 +135,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         title: const Text('Registrasi Peserta'),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_rounded),
-          onPressed: () => Navigator.pop(context),
+          onPressed: () => context.pop(),
         ),
       ),
       body: SafeArea(

@@ -5,6 +5,7 @@ import 'package:latlong2/latlong.dart';
 import 'package:provider/provider.dart';
 import 'package:absendulu/core/constants/app_colors.dart';
 import 'package:absendulu/core/services/location_service.dart';
+import 'package:absendulu/extensions/navigation.dart';
 import 'package:absendulu/presentation/providers/attendance_provider.dart';
 import 'package:absendulu/presentation/providers/auth_provider.dart';
 import 'package:absendulu/presentation/widgets/custom_snackbar.dart';
@@ -66,7 +67,7 @@ class _GpsVerificationScreenState extends State<GpsVerificationScreen> {
         context,
         widget.isCheckIn ? 'Absen Masuk Berhasil!' : 'Absen Pulang Berhasil!',
       );
-      Navigator.pop(context);
+      context.pop();
     } else {
       CustomSnackBar.showError(
         context,
@@ -226,7 +227,7 @@ class _GpsVerificationScreenState extends State<GpsVerificationScreen> {
                 size: 20,
                 color: isDark ? AppColors.textHighDark : AppColors.textHigh,
               ),
-              onPressed: () => Navigator.pop(context),
+              onPressed: () => context.pop(),
             ),
           ),
         ),

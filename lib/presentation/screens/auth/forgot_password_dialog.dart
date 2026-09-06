@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:absendulu/core/constants/app_colors.dart';
+import 'package:absendulu/extensions/navigation.dart';
 import 'package:absendulu/presentation/providers/auth_provider.dart';
 import 'package:absendulu/presentation/widgets/custom_snackbar.dart';
 import 'package:absendulu/presentation/widgets/neumorphic_button.dart';
@@ -70,7 +71,7 @@ class _ForgotPasswordDialogState extends State<ForgotPasswordDialog> {
 
     if (success) {
       CustomSnackBar.showSuccess(context, 'Password berhasil diperbarui');
-      Navigator.pop(context);
+      context.pop();
     } else {
       CustomSnackBar.showError(
         context,
@@ -108,7 +109,7 @@ class _ForgotPasswordDialogState extends State<ForgotPasswordDialog> {
                     ),
                   ),
                   IconButton(
-                    onPressed: () => Navigator.pop(context),
+                    onPressed: () => context.pop(),
                     icon: const Icon(Icons.close_rounded, size: 20),
                   ),
                 ],

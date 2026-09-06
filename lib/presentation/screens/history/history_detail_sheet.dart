@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:absendulu/core/constants/app_colors.dart';
 import 'package:absendulu/core/utils/date_formatter.dart';
+import 'package:absendulu/extensions/navigation.dart';
 import 'package:absendulu/data/models/attendance_model.dart';
 import 'package:absendulu/presentation/providers/attendance_provider.dart';
 import 'package:absendulu/presentation/providers/history_provider.dart';
@@ -24,12 +25,12 @@ class HistoryDetailSheet extends StatelessWidget {
         ),
         actions: [
           TextButton(
-            onPressed: () => Navigator.pop(dialogCtx, false),
+            onPressed: () => dialogCtx.pop(false),
             child: const Text('Batal'),
           ),
           ElevatedButton(
             style: ElevatedButton.styleFrom(backgroundColor: AppColors.danger),
-            onPressed: () => Navigator.pop(dialogCtx, true),
+            onPressed: () => dialogCtx.pop(true),
             child: const Text('Hapus', style: TextStyle(color: Colors.white)),
           ),
         ],
@@ -58,7 +59,7 @@ class HistoryDetailSheet extends StatelessWidget {
               context,
               'Data presensi berhasil dihapus',
             );
-            Navigator.pop(context);
+            context.pop();
           } else {
             CustomSnackBar.showError(
               context,

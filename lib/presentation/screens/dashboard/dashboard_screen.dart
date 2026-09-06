@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:absendulu/core/constants/app_colors.dart';
 import 'package:absendulu/core/theme/neumorphic_decorations.dart';
 import 'package:absendulu/core/utils/date_formatter.dart';
+import 'package:absendulu/extensions/navigation.dart';
 import 'package:absendulu/presentation/screens/attendance/gps_verification_screen.dart';
 import 'package:absendulu/presentation/screens/attendance/leave_request_dialog.dart';
 import 'package:absendulu/presentation/providers/attendance_provider.dart';
@@ -71,11 +72,8 @@ class DashboardScreen extends StatelessWidget {
     }
 
     void handleAttendanceTap() async {
-      await Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (_) => GpsVerificationScreen(isCheckIn: isCheckInAction),
-        ),
+      await context.push(
+        GpsVerificationScreen(isCheckIn: isCheckInAction),
       );
       await attendance.loadTodayAttendance();
       await attendance.loadStats();
